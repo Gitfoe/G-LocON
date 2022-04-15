@@ -26,7 +26,6 @@ public class MemoryResult {
     Date dateReceive = null;
     private File file;
     private FileWriter fw;
-    private PrintWriter pw;
 
     public MemoryResult(List<MemoryToSendData> sendData,List<MemoryToReceiveData> receiveData){
         this.sendData = sendData;
@@ -35,19 +34,7 @@ public class MemoryResult {
         // OutputToCSV();
     }
 
-    public void OutputToCSV() {
-        UtilCommon utilCommon = (UtilCommon)UtilCommon.getAppContext();
-        file = Environment.getExternalStorageDirectory();
-        try {
-            fw = new FileWriter(file.getPath()+"/"+ utilCommon.getPeerId()+"result.csv", false);//"/test.csv"
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        pw = new PrintWriter(new BufferedWriter(fw),true);
-        createResultFile();
-    }
-
-    public void createResultFile(){
+    public void createResultFile(PrintWriter pw){
         pw.print("LocationUpdateCount");
         pw.print(",");
         pw.print("EndPointIP");
@@ -57,10 +44,10 @@ public class MemoryResult {
         pw.print("RTT");
         pw.println();
 
-        outputDataToResultFile();
+        outputDataToResultFile(pw);
     }
 
-    public void outputDataToResultFile() {
+    public void outputDataToResultFile(PrintWriter pw) {
         int all = 0;
         Log.d("MemoryResult","sendDataSize"+sendData.size());
         Log.d("MemoryResult","receiveDataSize"+receiveData.size());

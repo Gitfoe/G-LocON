@@ -1,12 +1,12 @@
 package com.example.pc.main;
 
-import android.os.Environment;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import android.app.Application;
+import android.content.Context;
 
 /*
  * Created by Shimomura on 2017/04/26.
@@ -19,19 +19,30 @@ import java.io.PrintWriter;
 public class OutputToCSV {
     private File file;
     private FileWriter fw;
-    private PrintWriter pw;
+    public PrintWriter pw;
+    private Application application;
 
     public OutputToCSV(String fileName) {
-        file = Environment.getExternalStorageDirectory();
+        Context context = UtilCommon.getAppContext();
+        file = new File(context.getExternalFilesDir(null), fileName);
+
         try {
-            fw = new FileWriter(file.getPath() + fileName, false);//"/test.csv"
+            file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        pw = new PrintWriter(new BufferedWriter(fw),true);
+
+        //file = android.os.Environment.getExternalStorageDirectory();
+        try {
+            fw = new FileWriter(file, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        pw = new PrintWriter(new BufferedWriter(fw), true);
     }
 
-    public void setFieledName(String[] name) {
+    public void setFieldName(String[] name) {
         for (int i = 0; i < name.length; i++) {
             pw.print(name[i]);
             if (i != name.length)

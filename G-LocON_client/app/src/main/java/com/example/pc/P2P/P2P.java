@@ -9,6 +9,7 @@ import com.example.pc.main.MemoryToSendData;
 import com.example.pc.main.OutputToCSV;
 import com.example.pc.main.SetDate;
 import com.example.pc.main.UserInfo;
+import com.example.pc.main.UtilCommon;
 
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -48,8 +49,6 @@ public class P2P implements IP2PReceiver {
 
     /**
      * Update own user information
-     *
-     * @param myUserInfo
      */
     public void setMyUserInfo(UserInfo myUserInfo) {
         this.myUserInfo = myUserInfo;
@@ -203,13 +202,13 @@ public class P2P implements IP2PReceiver {
     public void setUpMemory() {
         sendMemory = Collections.synchronizedList(new ArrayList<MemoryToSendData>());
         receiveMemory = Collections.synchronizedList(new ArrayList<MemoryToReceiveData>());
-        sendFileInput = new OutputToCSV("/send.csv");//データ計測のファイル名
+        sendFileInput = new OutputToCSV("send.csv"); // File name for data measurement
         String[] fieldName = {"LocationUpdateCount", "endPointIP", "endPointPort", "sendTime"}; // CSV file fields
-        sendFileInput.setFieledName(fieldName);
+        sendFileInput.setFieldName(fieldName);
 
-        receiveFileInput = new OutputToCSV("/receive.csv");//同様
+        receiveFileInput = new OutputToCSV("receive.csv"); // Likewise
         String[] fieldName2 = {"LocationUpdateCount", "endPointIP", "endPointPort", "AckReceiveTime"};
-        receiveFileInput.setFieledName(fieldName2);
+        receiveFileInput.setFieldName(fieldName2);
     }
 
     /**
@@ -277,7 +276,12 @@ public class P2P implements IP2PReceiver {
     }
 
     public void fileInputMemoryResult(){
-        MemoryResult memoryResult = new MemoryResult(sendMemory,receiveMemory);
-        memoryResult.OutputToCSV();
+        if (sendMemory != null && receiveMemory != null)
+        {
+            UtilCommon utilCommon = (UtilCommon)UtilCommon.getAppContext();
+            MemoryResult memoryResult = new MemoryResult(sendMemory,receiveMemory);
+            OutputToCSV outputToCSV = new OutputToCSV(utilCommon.getPeerId() + "-result.csv"); // File name for data measurement
+            memoryResult.createResultFile(outputToCSV.pw);
+        }
     }
 }
