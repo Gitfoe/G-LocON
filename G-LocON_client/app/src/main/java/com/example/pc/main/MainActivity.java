@@ -2,9 +2,9 @@ package com.example.pc.main;
 
 
 import android.location.Location;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -129,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (R.id.start == v.getId()) {
-            utilCommon.setSignalingServerIP("192.168.11.17"); //serverIPアドレス
+            utilCommon.setSignalingServerIP("160.16.84.67"); //serverIPアドレス
             utilCommon.setSignalingServerPort(55555); //serverPort番号
-            utilCommon.setStunServerIP("192.168.11.17"); //serverIPアドレス
+            utilCommon.setStunServerIP("160.16.84.67"); //serverIPアドレス
             utilCommon.setStunServerPort(55554); //serverPort番号
             utilCommon.setPeerId(peerId.getText().toString());
             peerId.setVisibility(View.INVISIBLE);
@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
 
     /**
      * STUNサーバからグローバルIPとポート番号を取得した際に呼ばれるイベントリスナー
