@@ -1,13 +1,11 @@
 package com.example.pc.main;
 import static java.lang.Math.toRadians;
 
-/**
+/*
  * Created by MF17037 on 2018/08/04.
- * refer site : http://www.serendip.ws/archives/5281
- * 現在の端末の方角を取得するクラス，一つ前の位置情報が必須
+ * Refer to the website: http://www.serendip.ws/archives/5281
+ * Class for obtaining the direction of the current terminal, one previous location information is required.
  */
-
-
 
 public class HeadUp {
     private double latitude1;

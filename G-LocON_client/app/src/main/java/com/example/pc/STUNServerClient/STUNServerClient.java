@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import java.net.DatagramSocket;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 

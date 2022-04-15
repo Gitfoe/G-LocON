@@ -2,7 +2,7 @@ package com.example.pc.main;
 
 import com.google.android.gms.maps.model.Marker;
 
-/**
+/*
  * Created by pc on 2018/08/11.
  */
 

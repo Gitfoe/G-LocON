@@ -5,7 +5,7 @@ import android.location.Location;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -17,8 +17,8 @@ public class P2PJSONObject {
     }
 
     /**
-     * 処理タイプを取得する
-     * @return 処理方式
+     * Get processing type
+     * @return Processing method
      */
     public String getProcessType(){
         String processType = "";
@@ -30,8 +30,6 @@ public class P2PJSONObject {
         return processType;
     }
 
-
-
     public String getPeerId(){
         String peerId = null;
         try {
@@ -40,8 +38,6 @@ public class P2PJSONObject {
         }
         return peerId;
     }
-
-
 
     public double getSpeed(){
         double speed = 0;
@@ -52,8 +48,6 @@ public class P2PJSONObject {
         return speed;
     }
 
-
-
     public int getLocationCount(){
         int count = 0;
         try {
@@ -62,7 +56,6 @@ public class P2PJSONObject {
         }
         return count;
     }
-
 
     public Location getPeripheralUserLocation(){
         Location location = new Location("");

@@ -10,7 +10,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -46,7 +46,7 @@ public class STUNServerClientSender extends AsyncTask<String, String, Integer> {
                 }
                 sleep();
             } catch (Exception e) {
-                Log.d("loghogehoge", "" + e);
+                Log.d("loghogehoge", "" + e); // "hogehoge" = foobar-style name for a dummy variable
             }
         }
     }
@@ -55,7 +55,6 @@ public class STUNServerClientSender extends AsyncTask<String, String, Integer> {
     protected void onPostExecute(Integer result) {
 
     }
-
 
     private void sleep(){
         try {

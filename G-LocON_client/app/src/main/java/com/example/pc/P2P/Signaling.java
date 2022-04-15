@@ -11,7 +11,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -38,11 +38,9 @@ public class Signaling extends AsyncTask<String, String, Integer> {
     protected void onPreExecute() {
     }
 
-
     /**
-     * シグナリングサーバにデータを送信する
-     * @param data 今回は使わない
-     * @return
+     * Send data to signaling server
+     * @param data I won't use it this time
      */
     @Override
     protected Integer doInBackground(String... data) {
@@ -58,7 +56,7 @@ public class Signaling extends AsyncTask<String, String, Integer> {
                     DatagramPacket sendPacket;
                     sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
                     socket.send(sendPacket);
-                    System.out.println("REGISTER送信完了");
+                    System.out.println("REGISTER transmission complete");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -71,7 +69,7 @@ public class Signaling extends AsyncTask<String, String, Integer> {
                     DatagramPacket sendPacket;
                     sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
                     socket.send(sendPacket);
-                    System.out.println("UPDATE送信完了");
+                    System.out.println("UPDATE transmission complete");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -84,7 +82,7 @@ public class Signaling extends AsyncTask<String, String, Integer> {
                     DatagramPacket sendPacket;
                     sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
                     socket.send(sendPacket);
-                    System.out.println("SEARCH送信完了");
+                    System.out.println("SEARCH transmission complete");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -97,7 +95,7 @@ public class Signaling extends AsyncTask<String, String, Integer> {
                     DatagramPacket sendPacket;
                     sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
                     socket.send(sendPacket);
-                    System.out.println("DELETE送信完了");
+                    System.out.println("DELETE transmission complete");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -110,10 +108,9 @@ public class Signaling extends AsyncTask<String, String, Integer> {
     }
 
     /**
-     * 完了処理
+     * Completion procedures
      */
     @Override
     protected void onPostExecute(Integer a) {
     }
-
 }

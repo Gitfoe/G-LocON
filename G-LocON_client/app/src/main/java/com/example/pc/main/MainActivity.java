@@ -1,6 +1,5 @@
 package com.example.pc.main;
 
-
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,13 +35,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-/**
+/*
  * Created by mf17037 shimomura on 2018/08/11.
  */
 
 /**
- * v2vの基本形
+ * Basic form of V2V
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener, OnMapReadyCallback, ISTUNServerClient, IP2P {
     private EditText peerId;
@@ -52,27 +50,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button minus;
     private Button angle;
     private GoogleMap mMap;
-    private Location mLocation; //現在の位置情報
-    private float nowCameraAngle = 0; //現在のカメラアングル
-    private double nowSpeed = 0; //現在の速度
+    private Location mLocation; // Current location
+    private float nowCameraAngle = 0; // Current camera angle
+    private double nowSpeed = 0; // Current speed
     private List<MarkerInfo> markerList;
-    private Circle circle = null; //通信範囲
-    final static private double TOLERANCE_SPEED = 7; //速度差
+    private Circle circle = null; // Range of communication
+    final static private double TOLERANCE_SPEED = 7; // Speed differential
     private float cameraLevel = 18.0f;
     final static private String HEAD_UP= "HEAD_UP";
     final static private String NORTH_UP= "NORTH_UP";
     private String cameraAngle = HEAD_UP;
 
-
-    UtilCommon utilCommon; //サーバのグローバルIP等の共通データ
-    UserInfo myUserInfo; //自身の情報
+    UtilCommon utilCommon; // Common data such as global IP of the server
+    UserInfo myUserInfo; // Own information
     private DatagramSocket socket;
-    final static int NAT_TRAVEL_OK = 1; //自身のNAT変換された情報を取得済の場合はOK
-    private int natTravel = 0; //NAT_TRAVEL_OKに対応
-    final private static int USER_INFO_UPDATE_INTERVAL = 5; //シグナリングサーバに接続する頻度（位置情報を5回取得毎）
-    private int geoUpdateCount = 4; //USER_INFO_UPDATE_INTERVALに対応
-    private int totalGeoUpdateCount = 0; //位置情報の更新回数
-    private double searchRange = 100; //m単位
+    final static int NAT_TRAVEL_OK = 1; //OK if you have already obtained your own NAT converted information
+    private int natTravel = 0; // Support for NAT_TRAVEL_OK
+    final private static int USER_INFO_UPDATE_INTERVAL = 5; // Frequency of connecting to the signaling server (every 5 times location information is acquired)
+    private int geoUpdateCount = 4; // Support for USER_INFO_UPDATE_INTERVAL
+    private int totalGeoUpdateCount = 0; // Number of location updates
+    private double searchRange = 100; // In meters
     private int addMarker = 0;
     final private int ADD_MARKER_PROGRESS = 1;
     final private int NOT_ADD_MARKER_PROGRESS = 0;
@@ -109,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     /**
-     * ソケット生成メソッド
+     * Socket Generation Methods
      */
     private void createDatagramSocket() {
         try {
@@ -121,18 +118,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     /**
-     * bottonが押された際に呼ばれるイベントリスナー
-     * STUNサーバに接続するトリガーとする
+     * Event listener called when button is pressed
+     * Triggers a connection to the STUN server
      *
      * @param v
      */
     @Override
     public void onClick(View v) {
         if (R.id.start == v.getId()) {
-            utilCommon.setSignalingServerIP("160.16.84.67"); //serverIPアドレス
-            utilCommon.setSignalingServerPort(55555); //serverPort番号
-            utilCommon.setStunServerIP("160.16.84.67"); //serverIPアドレス
-            utilCommon.setStunServerPort(55554); //serverPort番号
+            utilCommon.setSignalingServerIP("160.16.84.67"); // Server IP address
+            utilCommon.setSignalingServerPort(55555); // Server port number
+            utilCommon.setStunServerIP("160.16.84.67");  // Server IP address
+            utilCommon.setStunServerPort(55554); // Server port number
             utilCommon.setPeerId(peerId.getText().toString());
             peerId.setVisibility(View.INVISIBLE);
             start.setVisibility(View.INVISIBLE);
@@ -181,11 +178,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * STUNサーバからグローバルIPとポート番号を取得した際に呼ばれるイベントリスナー
-     * 位置情報取得クラスの実行のトリガーとする
+     * Event listener called when global IP and port number are obtained from STUN server
+     * Triggers the execution of the location acquisition class.
      *
-     * @param IP   NAT変換されたグローバルIP
-     * @param port NAT変換されたグローバルPORT
+     * @param IP   NAT-transformed global IP
+     * @param port NAT-transformed global PORT
      */
     @Override
     public void onGetGlobalIP_Port(String IP, int port) {
@@ -209,9 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     /**
-     * マップ使用可能時に呼ばれるイベントリスナー
+     * Event listener called when map is available
      *
-     * @param googleMap マップ変数
+     * @param googleMap Mapped variable
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -244,20 +241,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String msg = "name:"+tapPeer.getPeerId()+"\nlatitude:"+tapPeer.getLatitude()+"\nlongitude:"+tapPeer.getLongitude()+"\nspeed:"+tapPeer.getSpeed();
                 displayToast(msg);
 
-
                 return false;
             }
         });
-
-
     }
 
-
     /**
-     * 位置情報を取得する際に呼ばれるイベントリスナー
-     * このイベントを元にピアやシグナリングサーバへのデータ送信やカメラの操作を行う
+     * Event listener called when acquiring location information
+     * This event is used to send data to peers and signaling servers and to operate the camera.
      *
-     * @param geo 現在位置
+     * @param geo Current location
      */
     @Override
     public void onLocationChanged(Location geo) {
@@ -268,7 +261,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("log", "speed:" + nowSpeed);
         mLocation = geo;
         cameraPosition(nowAngle);
-
 
         myUserInfo.setLatitude(geo.getLatitude());
         myUserInfo.setLongitude(geo.getLongitude());
@@ -289,11 +281,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     /**
-     * map上のカメラの位置，及び，アングルの操作
+     * Camera position on the map and manipulation of angles
      *
-     * @param angle //現在の端末の方角（北を0度とする）
+     * @param angle // Current terminal direction (north is 0 degrees)
      */
     public void cameraPosition(double angle) {
         if(cameraAngle.equals(HEAD_UP)) {
@@ -303,22 +294,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(cameraAngle.equals(NORTH_UP)){
             nowCameraAngle = 0;
         }
+
         LatLng location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         CameraPosition cameraPos = new CameraPosition.Builder().target(location).zoom(cameraLevel).bearing(nowCameraAngle).tilt(60).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos));
         if (circle == null) {
-            circle = mMap.addCircle(new CreateCircle().createCircleOptions(location, searchRange)); //検索半径の円を表示
+            circle = mMap.addCircle(new CreateCircle().createCircleOptions(location, searchRange)); // Show search radius circle
         } else {
             circle.setCenter(location);
         }
-
     }
 
 
     /**
-     * 端末のプライベートIPを取得
-     *
-     * @return privateIP address
+     * Get the private IP of the terminal
+     * @return Private IP address
      */
     public String GetPrivateIP() {
         String privateIP = null;
@@ -337,47 +327,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return privateIP;
     }
 
-
     /**
-     * 通信相手から詳細な位置，速度情報の取得
-     * マーカの操作を呼び出す
+     * Obtain detailed position and velocity information from the receiving party
+     * Call marker operation
      *
-     * @param userInfo            通信相手の情報
-     * @param peripheralUserInfos 現在の近接ユーザ数
+     * @param userInfo            Information on communication partners
+     * @param peripheralUserInfos Current number of users in proximity
      */
     @Override
     public void onGetDetailUserInfo(final UserInfo userInfo, ArrayList<UserInfo> peripheralUserInfos) {
         arrangeMarker(userInfo, peripheralUserInfos);
     }
 
-
     /**
-     * シグナリングサーバから周辺ユーザ情報を取得
-     * マーカの操作を呼び出す
+     * Obtain peripheral user information from signaling server
+     * Call marker operation
      *
-     * @param peripheralUserInfos 周辺ユーザ情報
+     * @param peripheralUserInfos Peripheral User Information
      */
     @Override
     public void onGetPeripheralUsersInfo(ArrayList<UserInfo> peripheralUserInfos) {
         arrangeMarker(null, peripheralUserInfos);
     }
 
-
     /**
-     * マップ上のマーカの制御を行う（マーカの追加，更新，削除）
+     * Control markers on the map (add, update, delete markers)
      *
-     * @param userInfo            マーカ位置の更新を行う通信相手情報
-     * @param peripheralUserInfos 現在の周辺ユーザ数
+     * @param userInfo            Communication partner information to update the marker position
+     * @param peripheralUserInfos Current number of users in the vicinity
      */
     synchronized public void arrangeMarker(final UserInfo userInfo, final ArrayList<UserInfo> peripheralUserInfos) {
-        /************************************************マーカの削除************************************************/
+        //region Marker removal
         if (userInfo == null) {
-            Log.d("Main_arrangeMarker", "マーカの削除を行う関数が呼ばれたときのマーカ数：" + markerList.size());
-            Log.d("Main_arrangeMarker", "現在の周辺ユーザ数:" + peripheralUserInfos.size());
-            final ArrayList<MarkerInfo> removeMarker = new ArrayList<>(); //削除するマーカを格納
+            Log.d("Main_arrangeMarker", "Number of markers when the function to delete markers is called:" + markerList.size());
+            Log.d("Main_arrangeMarker", "Current number of users in the vicinity:" + peripheralUserInfos.size());
+            final ArrayList<MarkerInfo> removeMarker = new ArrayList<>(); // Stores markers to be deleted
             final ArrayList<MarkerInfo> continueMarker = new ArrayList<>();
 
-            /////////////////////////////////////////////削除すべきマーカの探索/////////////////////////////////////////////
+            //region Search for markers to be deleted
             for (int i = 0; i < markerList.size(); i++) {
                 int j = 0;
                 for (; j < peripheralUserInfos.size(); j++) {
@@ -390,14 +377,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     removeMarker.add(markerList.get(i));
                 }
             }
-            /////////////////////////////////////////////削除すべきマーカの探索/////////////////////////////////////////////
+            //endregion
 
-
-            /////////////////////////////////////////////マーカの削除の実行/////////////////////////////////////////////
+            //region Perform marker deletion
             runOnUiThread(new Runnable() {
                 public void run() {
-                    Log.d("Main_arrangeMarker", "マーカの削除を行う直前のマーカ数：" + markerList.size());
-                    Log.d("Main_arrangeMarker", "削除するマーカ数：" + removeMarker.size());
+                    Log.d("Main_arrangeMarker", "Number of markers immediately before the marker is deleted: 1" + markerList.size());
+                    Log.d("Main_arrangeMarker", "Number of markers to be deleted: 1" + removeMarker.size());
                     if (peripheralUserInfos.size() == 0) {
                         for (int i = 0; i < markerList.size(); i++) {
                             markerList.get(i).getMarker().remove();
@@ -412,15 +398,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             return;
-            /////////////////////////////////////////////マーカの削除の実行/////////////////////////////////////////////
+            //endregion
         }
-        /************************************************マーカの削除************************************************/
+        //endregion
 
 
-        /************************************************マーカの作成・更新************************************************/
-        Log.d("Main_arrangeMarker", "マーカ移動を行う時のマーカ数" + markerList.size());
-        waitUntilFinishAddMarker(); //markerが他スレッドで作成中の場合は終了を待つ
-        /////////////////////////////////////////////マーカの更新の実行/////////////////////////////////////////////
+        //region Create and update markers
+        Log.d("Main_arrangeMarker", "Number of markers when performing a marker move" + markerList.size());
+        waitUntilFinishAddMarker(); // If marker is being created in another thread, wait for it to finish
+
+        //region Perform marker updates
         for (int i = 0; i < markerList.size(); i++) {
             final int tmp = i;
             if (markerList.get(i).getPeerId().equals(userInfo.getPeerId())) { //ぬるぽでる
@@ -435,19 +422,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(new Runnable() {
                         public void run() {
                             markerList.get(tmp).getMarker().setPosition(new LatLng(userInfo.getLatitude(), userInfo.getLongitude()));
-                            System.out.println("緯度"+userInfo.getLatitude()+"経度"+userInfo.getLongitude());
+                            System.out.println("Latitude"+userInfo.getLatitude()+"Longitude"+userInfo.getLongitude());
                             markerList.get(tmp).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                            System.out.println("マーカーのセット完了");
+                            System.out.println("Marker set up complete");
                         }
                     });
                 }
                 return;
             }
         }
-        /////////////////////////////////////////////マーカの更新の実行/////////////////////////////////////////////
+        //endregion
 
 
-        /////////////////////////////////////////////マーカの作成の実行/////////////////////////////////////////////
+        //region Execute marker creation
         addMarker = ADD_MARKER_PROGRESS;
         runOnUiThread(new Runnable() {
             public void run() {
@@ -457,11 +444,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addMarker = NOT_ADD_MARKER_PROGRESS;
             }
         });
-        /////////////////////////////////////////////マーカの作成の実行/////////////////////////////////////////////
+        //endregion
     }
-
-    /************************************************マーカの作成・更新************************************************/
-
+    //endregion
 
     private void waitUntilFinishAddMarker() {
         do {
@@ -469,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             try {
-                Thread.sleep(100); //100ミリ秒Sleepする
+                Thread.sleep(100); // Sleep for 100 milliseconds
             } catch (InterruptedException e) {
             }
         } while (true);
@@ -485,7 +470,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 }
-
-
-
-

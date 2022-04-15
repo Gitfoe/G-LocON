@@ -12,7 +12,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -36,31 +36,29 @@ public class P2PSender extends AsyncTask<String, String, Integer> {
     }
 
     /**
-     * 配列[0]はIP,[1]はport番号を入れるものとする
-     *
-     * @return
+     * Array [0] should contain IP and [1] should contain port number.
      */
     @Override
     protected Integer doInBackground(String... data) {
         if(EP2PProcess.SendLocation.equals(eP2PProcess)) {
-            Log.d("P2PSender_sendMsg", "現在の周辺ピア数：" + peripheralUsers.size());
+            Log.d("P2PSender_sendMsg", "Current number of peers in the vicinity：" + peripheralUsers.size());
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("processType", "SendLocation");
                 jsonObject.put("locationUpdateCount",locationUpdateCount);
                 jsonObject.put("latitude", myUserInfo.getLatitude());
                 jsonObject.put("longitude",myUserInfo.getLongitude());
-                jsonObject.put("peerID", myUserInfo.getPeerId()); //1112 Dを大文字にしてみた
+                jsonObject.put("peerID", myUserInfo.getPeerId()); // 1112 D capitalized.
                 jsonObject.put("speed",myUserInfo.getSpeed());
                 byte[] sendData = jsonObject.toString().getBytes();
                 for (int i = 0; i < peripheralUsers.size(); i++) {
                     DatagramPacket sendPacket;
-                    //同NAT内に存在する端末の場合はプライベートIPとPORTを指定する
+                    // Specify private IP and PORT for terminals residing in the same NAT
                     if (myUserInfo.getPublicIP().equals(peripheralUsers.get(i).getPublicIP())) {
                         sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(peripheralUsers.get(i).getPrivateIP()), peripheralUsers.get(i).getPrivatePort());
                         socket.send(sendPacket);
                     }
-                    //異なるNATに存在する端末の場合はNAT通過処理を行う
+                    // For terminals residing on different NATs, NAT traversal processing is performed
                     else {
                         Log.d("P2PSender_sendMsg", "宛先IP:" + peripheralUsers.get(i).getPublicIP() + "であり宛先PORT" + peripheralUsers.get(i).getPublicPort());
                         sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(peripheralUsers.get(i).getPublicIP()), peripheralUsers.get(i).getPublicPort());
@@ -71,12 +69,11 @@ public class P2PSender extends AsyncTask<String, String, Integer> {
                 e.printStackTrace();
             }
         }
-
         return 0;
     }
 
     /**
-     * 完了処理
+     * Completion procedures
      */
     @Override
     protected void onPostExecute(Integer a) {

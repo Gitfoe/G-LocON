@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
+/*
  * Created by pc on 2018/08/12.
  */
 
@@ -32,7 +32,7 @@ public class MemoryResult {
         this.sendData = sendData;
         this.receiveData = receiveData;
         sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        //OutputToCSV();
+        // OutputToCSV();
     }
 
     public void OutputToCSV() {
@@ -60,7 +60,6 @@ public class MemoryResult {
         outputDataToResultFile();
     }
 
-
     public void outputDataToResultFile() {
         int all = 0;
         Log.d("MemoryResult","sendDataSize"+sendData.size());
@@ -72,24 +71,20 @@ public class MemoryResult {
 
                 if(sd.getLocationUpdateCount().equals(rd.getLocationUpdateCount()) && sd.getEndPointIP().equals(rd.getEndPointIP())&& sd.getEndPointPort().equals(rd.getEndPointPort())) {
 
-
-
-                    // 日付を作成します。
+                    // Create the "Attachment".
                     try {
                         dateSend = sdf.parse(sd.getSendTime());
                         dateReceive = sdf.parse(rd.getReceiveTime());
                     } catch (ParseException e) {
-                        Log.d("MemoryResult","エラー："+e);
+                        Log.d("MemoryResult","Error:"+e);
                     }
 
-                    // 日付をlong値に変換します。
+                    // Convert a date to a long value.
                     long dateTimeSend = dateSend.getTime();
                     long dateTimeReceive = dateReceive.getTime();
 
-                    // RTTの時間を算出します。
+                    // Calculate the RTT time.
                     long tuusinjikan = (dateTimeReceive-dateTimeSend);
-
-
 
                     pw.print(sd.getLocationUpdateCount());
                     pw.print(",");
@@ -104,7 +99,7 @@ public class MemoryResult {
                 }
             }
         }
-        System.out.println("完了");
+        System.out.println("Completion");
 
         pw.flush();
         pw.close();

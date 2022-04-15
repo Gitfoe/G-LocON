@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -23,19 +23,15 @@ public class P2P implements IP2PReceiver {
     private IP2P iP2P;
     private DatagramSocket socket;
     private UserInfo myUserInfo;
-    private ArrayList<UserInfo> peripheralUsers; //周辺ユーザ情報
-    private OutputToCSV sendFileInput; //sendデータをCSVに書き込み
-    private OutputToCSV receiveFileInput; //receiveデータをCSVに書き込み
-    private List<MemoryToSendData> sendMemory; //sendデータを記録
-    private List<MemoryToReceiveData> receiveMemory; //receiveデータを記録
+    private ArrayList<UserInfo> peripheralUsers; // Perhiperal user information
+    private OutputToCSV sendFileInput; // Write send data to CSV
+    private OutputToCSV receiveFileInput; // Write receive data to CSV
+    private List<MemoryToSendData> sendMemory; // Record send data
+    private List<MemoryToReceiveData> receiveMemory; // Record receive data
 
     /**
-     * デフォルトコンストラクタ
-     * データをcsvに記録するためのsetUpMemoryを実行
-     *
-     * @param socket
-     * @param myUserInfo
-     * @param iP2P
+     * Default constructor
+     * Run setUpMemory to record data to csv
      */
     public P2P(DatagramSocket socket, UserInfo myUserInfo, IP2P iP2P) {
         this.iP2P = iP2P;
@@ -51,7 +47,7 @@ public class P2P implements IP2PReceiver {
     }
 
     /**
-     * 自身のユーザ情報の更新
+     * Update own user information
      *
      * @param myUserInfo
      */
@@ -60,7 +56,7 @@ public class P2P implements IP2PReceiver {
     }
 
     /**
-     * Receiverの処理を非同期で実行
+     * Asynchronous execution of Receiver processing
      */
     public void p2pReceiverStart() {
         P2PReceiver p2pReceiver = new P2PReceiver(socket, this);
@@ -68,7 +64,7 @@ public class P2P implements IP2PReceiver {
     }
 
 
-    /**************SignalingServerへの接続系**************************/
+    //region Connection system to SignalingServer
     public void signalingRegister() {
         ESignalingProcess eSignalingProcess;
         eSignalingProcess = ESignalingProcess.REGISTER;
@@ -96,10 +92,9 @@ public class P2P implements IP2PReceiver {
         Signaling signaling = new Signaling(socket, myUserInfo, eSignalingProcess);
         signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-    /**************SignalingServerへの接続系**************************/
+    //endregion
 
-
-    /*****************************P2PSender系*************************/
+    //region P2P sender system
     public void natRegisterDstUsers() {
         EP2PProcess eP2PProcess = EP2PProcess.NATRegisterDstUsers;
         P2PNatRegisterSender p2pNatRegisterSender = new P2PNatRegisterSender(socket, myUserInfo.getPublicIP(), myUserInfo.getPublicPort(), peripheralUsers, eP2PProcess);
@@ -118,22 +113,20 @@ public class P2P implements IP2PReceiver {
         MemoryToCSV_Send(locationUpdateCount);
         p2pSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
+
     /*
     public void sendAck(int locationCount, String srcIP, int srcPort) {
         EP2PProcess eP2PProcess = EP2PProcess.Ack;
         SendAck sendAck = new SendAck(socket, locationCount, srcIP, srcPort, eP2PProcess);
         sendAck.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
-     */
-    /*****************************P2PSender系*************************/
-
+    */
+    //endregion
 
 
     /**
-     * IP2PReceiverのレシーバ
-     *
-     * @param newPeripheralUsers 新しい周辺ユーザ情報
+     * IP2P receiver
+     * @param newPeripheralUsers New peripheral user information
      */
     @Override
     public void onGetPeripheralUser(ArrayList<UserInfo> newPeripheralUsers) {
@@ -142,12 +135,10 @@ public class P2P implements IP2PReceiver {
         natRegisterDstUsers();
     }
 
-
     /**
-     * @param srcUserInfo 自信を検索したユーザ情報
-     *                    シグナリングサーバに接続した送信元ユーザのIPとポートを自身のNATに記録する
+     * @param srcUserInfo User information for confidence searches.
+     *                    Record the IP and port of the source user connecting to the signaling server in its own NAT
      */
-
     @Override
     public void onDoUDPHolePunching(UserInfo srcUserInfo) {
         natRegisterSrcUser(srcUserInfo);
@@ -163,14 +154,13 @@ public class P2P implements IP2PReceiver {
 
 
     /**
-     * ピアから直接受信したユーザ情報
-     *
-     * @param locationUpdateCount 相手が位置情報を更新した回数
-     * @param srcIP               通信相手のIP
-     * @param srcPort             通信相手のポート
-     * @param location            相手の位置情報
-     * @param peerId              相手のIPアドレス
-     * @param speed               相手の速度
+     * User information received directly from peer
+     * @param locationUpdateCount   Number of times the peer has updated its location information.
+     * @param srcIP                 IP of the communication partner
+     * @param srcPort               Port of the communication partner
+     * @param location              Location information of the peer
+     * @param peerId                IP address of the peer
+     * @param speed                 Speed of the peer
      */
     @Override
     public void onGetPeripheralUserLocation(int locationUpdateCount, String srcIP, int srcPort, Location location, String peerId, double speed) {
@@ -196,28 +186,25 @@ public class P2P implements IP2PReceiver {
         }
     }
 
-
     /**
-     * 相手からのAckを受信
-     *
-     * @param locationCount 相手から転送された自身の位置情報更新回数
-     * @param endPointIP    相手のIPアドレス
-     * @param endPointPort  相手のポート番号
+     * Receive Ack from the other party
+     * @param locationCount Number of own location updates forwarded by the peer
+     * @param endPointIP IP address of the other party
+     * @param endPointPort Port number of the other party
      */
     @Override
     public void onGetAck(int locationCount, String endPointIP, int endPointPort) {
         MemoryToCSV_Receive(locationCount, endPointIP, endPointPort);
     }
 
-
     /**
-     * データをcsvに記録するためにフィールを設定
+     * Set feeler to record data to CSV
      */
     public void setUpMemory() {
         sendMemory = Collections.synchronizedList(new ArrayList<MemoryToSendData>());
         receiveMemory = Collections.synchronizedList(new ArrayList<MemoryToReceiveData>());
         sendFileInput = new OutputToCSV("/send.csv");//データ計測のファイル名
-        String[] fieldName = {"LocationUpdateCount", "endPointIP", "endPointPort", "sendTime"};//CSVファイルのフィールド
+        String[] fieldName = {"LocationUpdateCount", "endPointIP", "endPointPort", "sendTime"}; // CSV file fields
         sendFileInput.setFieledName(fieldName);
 
         receiveFileInput = new OutputToCSV("/receive.csv");//同様
@@ -225,17 +212,14 @@ public class P2P implements IP2PReceiver {
         receiveFileInput.setFieledName(fieldName2);
     }
 
-
     /**
-     * sendデータをリストに保管
-     *
-     * @param locationUpdateCount 自身が取得した位置情報更新回数
+     * Stores send data in a list
+     * @param locationUpdateCount Number of times the location information has been updated that has been obtained by the user
      */
     public void MemoryToCSV_Send(int locationUpdateCount) {
         String sendTime = "";
         SetDate d = new SetDate();
         sendTime = d.convertLong(System.currentTimeMillis());
-
 
         for (int i = 0; i < peripheralUsers.size(); i++) {
             if (!peripheralUsers.get(i).getPublicIP().equals(myUserInfo.getPublicIP())) {
@@ -250,11 +234,10 @@ public class P2P implements IP2PReceiver {
 
 
     /**
-     * receiveデータをリストに保管
-     *
-     * @param locationCount 自身の転送された位置情報取得回数
-     * @param endPointIP    相手のIPアドレス
-     * @param endPointPort  相手のポート番号
+     * Store receive data in a list
+     * @param locationCount Number of times own forwarded location information is acquired
+     * @param endPointIP IP address of the other party
+     * @param endPointPort Port number of the other party
      */
     public void MemoryToCSV_Receive(int locationCount, String endPointIP, int endPointPort) {
         String receiveTime = "";
@@ -269,9 +252,8 @@ public class P2P implements IP2PReceiver {
         receiveMemory.add(mtrd);
     }
 
-
     /**
-     * sendデータのcsvを作成
+     * Create CSV of sent data
      */
     public void fileInputMemorySendData() {
         for (int i = 0; i < sendMemory.size(); i++) {
@@ -282,9 +264,8 @@ public class P2P implements IP2PReceiver {
         sendFileInput.fileClose();
     }
 
-
     /**
-     * receiveデータのcsvデータを作成
+     * Create CSV of received data
      */
     public void fileInputMemoryReceiveData() {
         for (int i = 0; i < receiveMemory.size(); i++) {

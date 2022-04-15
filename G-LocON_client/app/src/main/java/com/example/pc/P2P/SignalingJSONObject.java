@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -26,8 +26,8 @@ public class SignalingJSONObject {
     }
 
     /**
-     * 処理タイプを受信データから取得する
-     * @return//処理タイプ
+     * Obtain the type of data from the received data.
+     *  @return Processing type
      */
     public String getProcessType(){
         String processType = "";
@@ -43,7 +43,7 @@ public class SignalingJSONObject {
         ArrayList<UserInfo> peripheralUsers = new ArrayList<>();
         JSONArray getArray = null;
         try {
-            Log.d("ProcessJSONObject","getPerioheralUserInfosまで来た");
+            Log.d("ProcessJSONObject","I'm up to getPeripheralUserInfos.");
             System.out.println(jsonObject.toString(4));
             getArray = jsonObject.getJSONArray("userList");
             for(int i = 0; i < getArray.length(); i++) {
@@ -78,11 +78,10 @@ public class SignalingJSONObject {
         return  srcUser;
     }
 
-
     /**
-     * シグナリングサーバにUserInfoを登録する
-     * @param userInfo ユーザ情報
-     * @return userInfoをJSONにしたもの
+     * Register UserInfo with the signaling server
+     * @param userInfo User information
+     * @return userInfo as JSON
      */
     public JSONObject covUserInfoForRegister(UserInfo userInfo){
         JSONObject jsonObject = new JSONObject();
@@ -103,9 +102,9 @@ public class SignalingJSONObject {
     }
 
     /**
-     * シグナリングサーバにUserInfoを更新する
-     * @param userInfo ユーザ情報
-     * @return userInfoをJSONにしたもの
+     * Update UserInfo to signaling server
+     * @param userInfo User information
+     * @return userInfo as JSON
      */
     public JSONObject covUserInfoForUpdate(UserInfo userInfo){
         JSONObject jsonObject = new JSONObject();
@@ -126,9 +125,9 @@ public class SignalingJSONObject {
     }
 
     /**
-     * シグナリングサーバに検索を問い合わせる
-     * @param userInfo ユーザ情報
-     * @return userInfoとdistanceをJSONにしたもの
+     * Query the signaling server for a search
+     * @param userInfo User information
+     * @return userInfo and distance as JSON
      */
     public JSONObject covUserInfoForSearch(UserInfo userInfo, double distance){
         JSONObject jsonObject = new JSONObject();
@@ -150,9 +149,9 @@ public class SignalingJSONObject {
     }
 
     /**
-     * シグナリングサーバにUserInfoを破棄させる
-     * @param userInfo ユーザ情報
-     * @return userInfoをJSONにしたもの
+     * Have signaling server destroy UserInfo
+     * @param userInfo User information
+     * @return userInfo as JSON
      */
     public JSONObject covUserInfoForDelete(UserInfo userInfo){
         JSONObject jsonObject = new JSONObject();

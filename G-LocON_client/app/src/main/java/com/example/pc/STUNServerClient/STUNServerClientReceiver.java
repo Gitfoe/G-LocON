@@ -6,7 +6,7 @@ import android.util.Log;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
@@ -39,7 +39,7 @@ public class STUNServerClientReceiver extends AsyncTask<String, String, Integer>
             istunServerClientReceiver.onReceiveMsgFromStun(addr, port);
 
             } catch (Exception e) {
-                Log.d("hogehoge", "変換で失敗" + e);
+                Log.d("hogehoge", "Conversion failure" + e); // "hogehoge" = foobar-style name for a dummy variable
             }
         return 0;
     }

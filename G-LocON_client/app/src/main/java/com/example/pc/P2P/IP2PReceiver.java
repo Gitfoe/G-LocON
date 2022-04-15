@@ -5,14 +5,14 @@ import com.example.pc.main.UserInfo;
 
 import java.util.ArrayList;
 
-/**
+/*
  * Created by pc on 2018/06/09.
- * このインターフェースはP2Pにimplementし，P2PReceiverで使用
+ * This interface is implemented in P2P and used by P2PReceiver
  */
 
 public interface IP2PReceiver {
-    void onGetPeripheralUser(ArrayList<UserInfo> peripheralUsers); //シグナリングサーバから周辺ユーザ情報を取得時
-    void onDoUDPHolePunching(UserInfo srcUser);//自身を検索したユーザ情報をNATに登録時
-    void onGetPeripheralUserLocation(int locationUpdateCount,String srcIP,int srcPort,Location location,String peerId,double speed);//ピアからデータを取得時
-    void onGetAck(int locationCount, String endPointIP, int endPointPort);//ACKの送信時
+    void onGetPeripheralUser(ArrayList<UserInfo> peripheralUsers); // When acquiring peripheral user information from the signaling server
+    void onDoUDPHolePunching(UserInfo srcUser);// When registering user information that has searched for itself to the NAT
+    void onGetPeripheralUserLocation(int locationUpdateCount,String srcIP,int srcPort,Location location,String peerId,double speed);// When getting data from peers
+    void onGetAck(int locationCount, String endPointIP, int endPointPort);// When sending ACK
 }

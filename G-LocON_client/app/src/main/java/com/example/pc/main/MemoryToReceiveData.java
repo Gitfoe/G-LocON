@@ -1,6 +1,6 @@
 package com.example.pc.main;
 
-/**
+/*
  * Created by MF17037 on 2017/08/17.
  */
 
@@ -16,7 +16,6 @@ public class MemoryToReceiveData {
         this.endPointPort = endPointPort;
         this.receiveTime = receiveTime;
     }
-
 
     public String getLocationUpdateCount() {
         return locationUpdateCount;

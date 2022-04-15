@@ -10,17 +10,16 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 //import com.google.android.gms.location.LocationListener;
 
-
 /**
-使い方
- 1.Activity側でパーミッションの確認をする
- 2.パーミッション確認後、このクラスのインスタンスを生成
- ->Activity側でcom.google.android.gms.location.LocationListenerのインスタンスを引数にするがこれをimplementしthisを引数にする
- 3.creategoogleApiClientを呼ぶ，すると位置情報を取得する
- 4.コールバック関数を用いているので位置情報を取得したらActivity側に値を自動で返す
- ->onLocationChangedをActivity側で定義する必要がある
+ How to use
+ 1. Check permissions on the Activity side
+ 2. After checking permissions, create an instance of this class
+ -> LocationListener instance as an argument on the Activity side, but implement this and set this as an argument.
+ 3. Call "creategoogleApiClient" to get location information.
+ 4. Callback function is used so that the value is automatically returned to the Activity side once the location information is obtained.
+ -> onLocationChanged needs to be defined on the Activity side
 
- よくわからない方は調べて
+ If you're not sure, look it up.
  */
 
 public class MyLocation implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -30,9 +29,9 @@ public class MyLocation implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     private long setLocationUpdateInterval;
 
     /**
-     * ContextとActivity側のcom.google.android.gms.location.LocationListenerを記録する
-     * @param context ActivityのContext
-     * @param locationListener Activityのcom.google.android.gms.location.LocationListener
+     * Record com.google.android.gms.location.LocationListener on Context and Activity side
+     * @param context Context of Activity
+     * @param locationListener Activity's com.google.android.gms.location.LocationListener
      */
     MyLocation(Context context, com.google.android.gms.location.LocationListener locationListener, long setLocationUpdateInterval) {
         this.context = context;
@@ -40,16 +39,11 @@ public class MyLocation implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         this.setLocationUpdateInterval = setLocationUpdateInterval;
     }
 
-
-
-
-
-
-
-
-    //位置情報を取得するのに必要インスタンスとなるものを生成するメソッド
+    /**
+     * Methods to generate instances necessary to obtain location information
+     */
     public void createGoogleApiClient(){
-        // GoogleApiClientの作成
+        // Creation of GoogleApiClient
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(context)
                     .addConnectionCallbacks(this)
@@ -60,49 +54,45 @@ public class MyLocation implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         googleApiClient.connect();
     }
 
-//つながる場合はこのメソッドがコールバックされる
+    /**
+     * If connected, this method is called back.
+     */
     @Override
     public void onConnected(Bundle connectionHint) {
-        // Wearable.MessageApi.addListenerなどよぶ
+        // Wearable.MessageApi.addListener etc.
         createLocationRequest();
     }
 
     @Override
     public void onConnectionSuspended(int cause) {
-        // 切断された時の処理
-        // Wearable.MessageApi.removeListenerなどよぶ
+        // Processing when disconnected
+        // Wearable.MessageApi.removeListener etc.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        // エラー処理
-        // Google Play Servicesがインストールされていない場合などの案内を表示
+        // Error Handling
+        // Display information if Google Play Services is not installed, etc.
     }
 
     /**
-     * 現在地が更新された際のリスナーを設定
-     *
+     * Set up a listener for when the current location is updated.
      */
     private void createLocationRequest() {
-        // networkではどんなに早くても5秒間隔で更新される
-        // GPS利用時では設定した間隔で更新される
+        // In the network, updates are made at 5 second intervals at the earliest
+        // When using GPS, updates are made at set intervals
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(setLocationUpdateInterval);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        // 設定したLocationRequestで位置情報の更新を開始
+        // Start updating location information with the set LocationRequest
         if (context.getPackageManager().checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-            // 設定したLocationRequestで位置情報の更新を開始
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, locationListener);
         }
     }
 
-
     /**
-     * 位置情報の取得を終了する
+     * Terminate acquisition of location information
      */
     public void stopGetLocation(){
         LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,locationListener);

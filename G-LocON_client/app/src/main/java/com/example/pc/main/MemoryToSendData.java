@@ -1,6 +1,6 @@
 package com.example.pc.main;
 
-/**
+/*
  * Created by MF17037 on 2017/08/17.
  */
 

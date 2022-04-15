@@ -8,20 +8,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
+/*
  * Created by Shimomura on 2017/04/26.
  */
 
 /**
- * CSVにデータを出力するクラス
+ * Class to output data to CSV
  * @author Shimomura
  */
-
 public class OutputToCSV {
     private File file;
     private FileWriter fw;
     private PrintWriter pw;
-
 
     public OutputToCSV(String fileName) {
         file = Environment.getExternalStorageDirectory();
@@ -41,6 +39,7 @@ public class OutputToCSV {
         }
         pw.println();
     }
+
     public void setSendData(String sendDataCount, String locationGetTime, String sendTime, String peerId, String peerListUpdate){
         synchronized(pw) {
             pw.print(sendDataCount);
@@ -57,7 +56,6 @@ public class OutputToCSV {
         }
     }
 
-
     public void setRecieveData(String sendDataCount,String RecieveTime, String senderPeerId){
         synchronized(pw) {
             pw.print(sendDataCount);
@@ -69,11 +67,9 @@ public class OutputToCSV {
         }
     }
 
-
     /**
-     * CSVファイルのフィールドを定義するメソッド
-     * @param name
-     *      エクセルのフィールド名
+     * Methods to define fields in a CSV file
+     * @param name Excel field name
      */
     public void OutputFieledName(String... name) {
         for (int i = 0; i < name.length; i++) {
@@ -84,9 +80,8 @@ public class OutputToCSV {
     }
 
     /**
-     * CSVファイルのフィールドを定義するメソッド
-     * @param datas
-     *      エクセルに出力したいデータ
+     * Methods to define fields in a CSV file
+     * @param datas Data to be output to Excel
      */
     public void OutputData(String... datas){
         for(int i = 0; i < datas.length; i++){
@@ -96,10 +91,9 @@ public class OutputToCSV {
         pw.println();
     }
 
-
-    /*
-    ファイル出力を終了する際にflushとcloseを行う
-    分からない方はActivityを終了させる時にこのメソッドを呼ぶべき
+    /**
+     Flush and close when terminating file output
+     If you don't know, you should call this method when you exit Activity
      */
     public void fileClose(){
         pw.flush();
@@ -116,6 +110,5 @@ public class OutputToCSV {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

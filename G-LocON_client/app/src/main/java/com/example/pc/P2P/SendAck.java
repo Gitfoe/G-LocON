@@ -8,10 +8,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/**
+/*
  * Created by MF17037 on 2018/08/09.
  */
 /*
+
 public class SendAck extends AsyncTask<String, String, Integer> {
     private DatagramSocket socket;
     private int locationUpdateCount;

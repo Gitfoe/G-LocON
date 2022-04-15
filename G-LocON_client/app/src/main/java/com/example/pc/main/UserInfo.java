@@ -1,6 +1,6 @@
 package com.example.pc.main;
 
-/**
+/*
  * Created by MF17037 on 2017/12/13.
  */
 
@@ -17,7 +17,6 @@ public class UserInfo {
     public UserInfo(){
 
     }
-
 
     public String getPublicIP() {
         return publicIP;

@@ -3,7 +3,7 @@ package com.example.pc.main;
 import android.app.Application;
 import android.content.Context;
 
-/**
+/*
  * Created by pc on 2018/06/09.
  */
 
