@@ -1,13 +1,6 @@
 package com.example.pc.main;
 
-import android.os.Environment;
 import android.util.Log;
-
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,8 +17,6 @@ public class MemoryResult {
     SimpleDateFormat sdf;
     Date dateSend = null;
     Date dateReceive = null;
-    private File file;
-    private FileWriter fw;
 
     public MemoryResult(List<MemoryToSendData> sendData,List<MemoryToReceiveData> receiveData){
         this.sendData = sendData;
