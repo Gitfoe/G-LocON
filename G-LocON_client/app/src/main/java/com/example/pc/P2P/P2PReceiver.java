@@ -29,7 +29,7 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
 
     @Override
     protected Void doInBackground(String... text) {
-        Log.d("Receive", "I'm up to Recieve class.");
+        Log.d("Receive", "I'm up to Receive class.");
         final String GET_PERIPHERAL_USER = "getPeripheralUserInfoList";
         final String RECEIVE_MSG_PEER = "peermsg";
         final String DO_UDP_HOLE_PUNCHING = "doUDPHolePunching";
@@ -64,11 +64,10 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
 
                 else if(processType.equals(SEND_DATA)) {
                     P2PJSONObject p2pJSONObject = new P2PJSONObject(jsonObject);
-                    Log.d("Receive", "送信元:" + receivePacket.getAddress());
+                    Log.d("Receive", "Sender:" + receivePacket.getAddress());
                     System.out.println("SEND_DATA");
                     Location location = p2pJSONObject.getPeripheralUserLocation();
                     iP2PReceiver.onGetPeripheralUserLocation(p2pJSONObject.getLocationCount(), receivePacket.getAddress().getHostAddress(), receivePacket.getPort(), location, p2pJSONObject.getPeerId(), p2pJSONObject.getSpeed());
-
                 }
 
                 /*
@@ -78,11 +77,9 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
                         iP2PReceiver.onGetAck(p2pJSONObject.getLocationCount(), receivePacket.getAddress().getHostAddress(), receivePacket.getPort());
                 }
                 */
-
             } catch (JSONException e) {
                 Log.d("P2P", "Error:"+e);
             }
-
         } while (true);
     }
 

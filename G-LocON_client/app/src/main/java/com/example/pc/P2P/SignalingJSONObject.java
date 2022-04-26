@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class SignalingJSONObject {
     JSONObject jsonObject;
 
-    SignalingJSONObject(){
+    SignalingJSONObject()  {
 
     }
 

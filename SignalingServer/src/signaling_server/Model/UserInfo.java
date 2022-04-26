@@ -1,22 +1,20 @@
-package signaling_server;
+package signaling_server.Model;
 
 public class UserInfo {
 
-	//メンバ変数
-    private String publicIP;
-    private int publicPort;
-    private String privateIP;
-    private int privatePort;
-    private double latitude;
-    private double longitude;
-    private String peerId;
-    //private double speed;
+	private String publicIP;
+	private int publicPort;
+	private String privateIP;
+	private int privatePort;
+	private double latitude;
+	private double longitude;
+	private String peerId;
+	//private double speed;
 
+	public UserInfo() {
+	}
 
-    //コンストラクタ（引数なし）
-    public UserInfo() {
-    }
-/*
+	/*
     public UserInfo(String publicIP,int publicPort,String privateIP,int privatePort,double latitude,double longitude,String peerId){
         this.publicIP = publicIP;
         this.publicPort = publicPort;
@@ -25,19 +23,19 @@ public class UserInfo {
         this.latitude = latitude;
         this.longitude = longitude;
         this.peerId = peerId;
-    }
-    */
-    public UserInfo(String publicIP,int publicPort,String privateIP,int privatePort,double latitude,double longitude,String peerId){
-        this.publicIP = publicIP;
-        this.publicPort = publicPort;
-        this.privateIP = privateIP;
-        this.privatePort = privatePort;
-        //this.speed = speed;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.peerId = peerId;
-    }
+     }
+     */
 
+	public UserInfo(String publicIP, int publicPort, String privateIP, int privatePort, double latitude, double longitude, String peerId) {
+		this.publicIP = publicIP;
+		this.publicPort = publicPort;
+		this.privateIP = privateIP;
+		this.privatePort = privatePort;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.peerId = peerId;
+		//this.speed = speed;
+	}
 
 	/**
 	 * @return publicIP
@@ -47,7 +45,7 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param publicIP セットする publicIP
+	 * @param publicIP Set publicIP
 	 */
 	public void setPublicIP(String publicIP) {
 		this.publicIP = publicIP;
@@ -61,7 +59,7 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param publicPort セットする publicPort
+	 * @param publicPort Set publicPort
 	 */
 	public void setPublicPort(int publicPort) {
 		this.publicPort = publicPort;
@@ -75,7 +73,7 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param privateIP セットする privateIP
+	 * @param privateIP Set privateIP
 	 */
 	public void setPrivateIP(String privateIP) {
 		this.privateIP = privateIP;
@@ -89,7 +87,7 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param privatePort セットする privatePort
+	 * @param privatePort Set privatePort
 	 */
 	public void setPrivatePort(int privatePort) {
 		this.privatePort = privatePort;
@@ -103,7 +101,7 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param latitude セットする latitude
+	 * @param latitude Set latitude
 	 */
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
@@ -117,34 +115,37 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param longitude セットする longitude
+	 * @param longitude Set longitude
 	 */
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-/*
-	//speed
-	public double getSpeed() {
-		return speed;
-	}
 
-	//speedのセット
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-	*/
+//	/**
+//	 * @return speed
+//	 */
+//	public double getSpeed() {
+//		return speed;
+//	}
+//
+//	/**
+//	 * @param speed Set speed
+//	 */
+//	public void setSpeed(double speed) {
+//		this.speed = speed;
+//	}
+
 	/**
 	 * @return peerId
 	 */
 	public String getPeerId() {
 		return peerId;
 	}
+
 	/**
-	 * @param peerId セットする peerId
+	 * @param peerId Set peerId
 	 */
 	public void setPeerId(String peerId) {
 		this.peerId = peerId;
 	}
-
-
 }
