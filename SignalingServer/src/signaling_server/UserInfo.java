@@ -1,4 +1,4 @@
-package signaling_server.Model;
+package signaling_server;
 
 public class UserInfo {
 

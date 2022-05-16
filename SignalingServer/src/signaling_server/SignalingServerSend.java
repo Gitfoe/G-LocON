@@ -1,12 +1,11 @@
-package signaling_server.Controller;
-
-import org.json.JSONObject;
-import signaling_server.Model.UserInfo;
+package signaling_server;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
+
+import org.json.JSONObject;
 
 public class SignalingServerSend extends Thread {
     private DatagramSocket socket; // UDP communication socket

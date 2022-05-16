@@ -60,7 +60,7 @@ public class P2PSender extends AsyncTask<String, String, Integer> {
                     }
                     // For terminals residing on different NATs, NAT traversal processing is performed
                     else {
-                        Log.d("P2PSender_sendMsg", "宛先IP:" + peripheralUsers.get(i).getPublicIP() + "であり宛先PORT" + peripheralUsers.get(i).getPublicPort());
+                        Log.d("P2PSender_sendMsg", "Destination IP: " + peripheralUsers.get(i).getPublicIP() + " and destination port: " + peripheralUsers.get(i).getPublicPort());
                         sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(peripheralUsers.get(i).getPublicIP()), peripheralUsers.get(i).getPublicPort());
                         socket.send(sendPacket);
                     }
@@ -77,6 +77,6 @@ public class P2PSender extends AsyncTask<String, String, Integer> {
      */
     @Override
     protected void onPostExecute(Integer a) {
-        Log.d("P2P", "P2Psenderのsendはできた");
+        Log.d("P2P", "P2Psender send was done");
     }
 }

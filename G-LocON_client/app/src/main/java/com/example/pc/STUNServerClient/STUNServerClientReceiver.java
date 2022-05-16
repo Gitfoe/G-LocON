@@ -25,7 +25,7 @@ public class STUNServerClientReceiver extends AsyncTask<String, String, Integer>
 
     @Override
     protected Integer doInBackground(String... text) {
-        // receive Data
+        // Receive data
         DatagramPacket receivePacket = new DatagramPacket(new byte[128], 128);
         String addr;
         int port;
@@ -39,7 +39,7 @@ public class STUNServerClientReceiver extends AsyncTask<String, String, Integer>
             istunServerClientReceiver.onReceiveMsgFromStun(addr, port);
 
             } catch (Exception e) {
-                Log.d("hogehoge", "Conversion failure" + e); // "hogehoge" = foobar-style name for a dummy variable
+                Log.d("hogehoge", "Conversion failure: " + e); // "hogehoge" = foobar-style name for a dummy variable
             }
         return 0;
     }

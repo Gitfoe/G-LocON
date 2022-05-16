@@ -122,7 +122,6 @@ public class P2P implements IP2PReceiver {
     */
     //endregion
 
-
     /**
      * IP2P receiver
      * @param newPeripheralUsers New peripheral user information
@@ -150,7 +149,6 @@ public class P2P implements IP2PReceiver {
         }
         peripheralUsers.add(srcUserInfo);
     }
-
 
     /**
      * User information received directly from peer
