@@ -7,31 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="154b8331-94f4-4e52-a03b-0c9cd2113886" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/OutputToCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/OutputToCSV.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/Controller/STUNServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/Controller/STUNServerReceive.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/Controller/STUNServerSend.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/Model/UserInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/View/StartUp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SignalingServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SignalingServer/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SignalingServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SignalingServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/../SignalingServer/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/Controller/HubenyDistance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/Controller/ProcessJSONObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/Controller/SignalingServerReceive.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/Controller/SignalingServerSend.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/Model/UserInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/View/StartUp.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,18 +33,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/wafoe/OneDrive - Windesheim Office365/School/8 Afstuderen SIT/Project/Realizing/G-LocON/STUNServer",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wafoe/OneDrive - Windesheim Office365/School/8 Afstuderen SIT/Project/Realizing/G-LocON/STUNServer&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration name="StartUp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="stun_server.StartUp" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="stun_server.StartUp" />
       <module name="STUNServer" />
       <extension name="coverage">
@@ -87,7 +70,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartUp" />
+        <item itemvalue="Application.stun_server.StartUp" />
       </list>
     </recent_temporary>
   </component>
@@ -101,5 +84,16 @@
       <updated>1652675225672</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -82,7 +82,7 @@ public class OutputToCSV {
      * Methods to define fields in a CSV file
      * @param name Excel field name
      */
-    public void OutputFieledName(String... name) {
+    public void OutputFieldName(String... name) {
         for (int i = 0; i < name.length; i++) {
             pw.print(name[i]);
             pw.print(",");

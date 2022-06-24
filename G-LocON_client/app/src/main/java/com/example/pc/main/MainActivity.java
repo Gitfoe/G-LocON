@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (R.id.start == v.getId()) {
-            utilCommon.setSignalingServerIP("160.16.84.67"); // Server IP address
+            utilCommon.setSignalingServerIP("192.168.0.144"); // Server IP address
             utilCommon.setSignalingServerPort(55555); // Server port number
-            utilCommon.setStunServerIP("160.16.84.67");  // Server IP address
+            utilCommon.setStunServerIP("192.168.0.144");  // Server IP address
             utilCommon.setStunServerPort(55554); // Server port number
             utilCommon.setPeerId(peerId.getText().toString());
             peerId.setVisibility(View.INVISIBLE);
@@ -140,10 +140,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             angle.setOnClickListener(this);
 
             mLocation = new Location("");
-            //mLocation.setLatitude(35.951003); //大学前
-            //mLocation.setLongitude(139.655367);//大学前
-            mLocation.setLatitude(35.409716);//自宅前
-            mLocation.setLongitude(139.588568);//自宅前
+            //mLocation.setLatitude(35.951003); // In front of the university
+            //mLocation.setLongitude(139.655367);// In front of the university
+            mLocation.setLatitude(35.409716);// In front of the house
+            mLocation.setLongitude(139.588568);// In front of the house
 
             STUNServerClient stunServerClient = new STUNServerClient(socket, this);
             stunServerClient.stunServerClientStart();
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onLocationChanged(Location geo) {
         double nowAngle = new HeadUp(mLocation.getLatitude(), mLocation.getLongitude(), geo.getLatitude(), geo.getLongitude()).getNowAngle();
-        //m/sをkm/hに変換
+        // Convert m/s to km/h
         nowSpeed = (new HubenyDistance().calcDistance(mLocation.getLatitude(), mLocation.getLongitude(), geo.getLatitude(), geo.getLongitude())) * 3.6;
         Log.d("log", "angle:" + nowAngle);
         Log.d("log", "speed:" + nowSpeed);
@@ -274,10 +274,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 geoUpdateCount = 0;
                 p2p.signalingUpdate();
                 p2p.signalingSearch(searchRange);
-                p2p.sendLocation(totalGeoUpdateCount);
-            } else {
-                p2p.sendLocation(totalGeoUpdateCount);
             }
+            p2p.sendLocation(totalGeoUpdateCount);
         }
     }
 

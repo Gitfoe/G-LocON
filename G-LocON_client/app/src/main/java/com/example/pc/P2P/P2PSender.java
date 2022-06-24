@@ -56,14 +56,13 @@ public class P2PSender extends AsyncTask<String, String, Integer> {
                     // Specify private IP and PORT for terminals residing in the same NAT
                     if (myUserInfo.getPublicIP().equals(peripheralUsers.get(i).getPublicIP())) {
                         sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(peripheralUsers.get(i).getPrivateIP()), peripheralUsers.get(i).getPrivatePort());
-                        socket.send(sendPacket);
                     }
                     // For terminals residing on different NATs, NAT traversal processing is performed
                     else {
                         Log.d("P2PSender_sendMsg", "Destination IP: " + peripheralUsers.get(i).getPublicIP() + " and destination port: " + peripheralUsers.get(i).getPublicPort());
                         sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(peripheralUsers.get(i).getPublicIP()), peripheralUsers.get(i).getPublicPort());
-                        socket.send(sendPacket);
                     }
+                    socket.send(sendPacket);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
