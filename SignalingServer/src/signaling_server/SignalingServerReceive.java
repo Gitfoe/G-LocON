@@ -64,7 +64,9 @@ public class SignalingServerReceive extends Thread {
 	}
 
 	/**
-	 * User Information Registration
+	 * Registers a user in the userInfoList
+	 *
+	 * @param userInfo Information of the user
 	 */
 	public void onRegister(UserInfo userInfo) {
 		userInfoList.add(userInfo);
@@ -73,9 +75,9 @@ public class SignalingServerReceive extends Thread {
 	}
 
 	/**
-	 * Update user information
+	 * Updates user information in the userInfoList
 	 *
-	 * @param userInfo User Information
+	 * @param userInfo Updated new information of the user
 	 */
 	public void onUpdate(UserInfo userInfo) {
 		/*
@@ -99,7 +101,7 @@ public class SignalingServerReceive extends Thread {
 
 	/**
 	 * 1.Search user information that exists from the specified user's location or within the search radius circle, and store the corresponding user in the search list.
-	 * 2.Send the IP and port of the user to be connected to for NAT traversal to the users stored in the search list, and have them send empty data such as "ping
+	 * 2.Send the IP and port of the user to be connected to for NAT traversal to the users stored in the search list, and have them send empty data such as "ping"
 	 * 3.Return search results to the sending user
 	 *
 	 * @param userInfo       User information of the search source
@@ -151,9 +153,9 @@ public class SignalingServerReceive extends Thread {
 	}
 
 	/**
-	 * Discard specified user information
+	 * Discard specified user information from the userInfoList
 	 *
-	 * @param userInfo User Information
+	 * @param userInfo User information of the user that needs to be deleted
 	 */
 	public void onDelete(UserInfo userInfo) {
 		/*

@@ -7,12 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="154b8331-94f4-4e52-a03b-0c9cd2113886" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/STUNServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/stun_server/STUNServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stun_server/STUNServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/stun_server/STUNServerReceive.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SignalingServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SignalingServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/SignalingServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SignalingServer/src/signaling_server/SignalingServerReceive.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
