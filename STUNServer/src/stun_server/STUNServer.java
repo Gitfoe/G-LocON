@@ -1,6 +1,5 @@
 package stun_server;
 
-
 import java.net.DatagramSocket;
 
 public class STUNServer extends Thread {
@@ -32,7 +31,7 @@ public class STUNServer extends Thread {
 	}
 
 	/**
-	 * Asynchronous processing
+	 * Asynchronous processing, starts receiving STUN requests
 	 */
 	public void run() {
 		STUNServerReceive stunServerReceive = new STUNServerReceive(serverSocket, userInfo);

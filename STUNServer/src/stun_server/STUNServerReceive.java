@@ -9,8 +9,8 @@ import java.net.InetAddress;
 // Receiving STUN server
 public class STUNServerReceive extends Thread {
 
-	DatagramSocket datagramSocket;
-	UserInfo userInfo;
+	private DatagramSocket datagramSocket;
+	private UserInfo userInfo;
 
 	public STUNServerReceive() {
 		super();
@@ -36,9 +36,7 @@ public class STUNServerReceive extends Thread {
 				datagramSocket.receive(receivePacket);
 				String getMsg = new String(receivePacket.getData(), 0, receivePacket.getLength());
 				if (getMsg.equals("Hello")) {
-
 					onReceiveMsg(receivePacket); // Stored in userInfo
-
 				} else {
 					System.out.println("STUNServer;getMsg:" + getMsg);
 				}
@@ -61,13 +59,13 @@ public class STUNServerReceive extends Thread {
 		// Display userInfo
 		userInfo.printInfo();
 
-		onSendeMsg();
+		onSendMsg();
 	}
 
 	/*
 	 * ServerSend generation
 	 */
-	public void onSendeMsg() {
+	public void onSendMsg() {
 		// STUN server generation for transmission
 		STUNServerSend stunServerSend = new STUNServerSend(datagramSocket, userInfo);
 		stunServerSend.start();

@@ -8,12 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="10759fbd-b789-499a-9d69-33b75d662daf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/OutputToCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/OutputToCSV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STUNServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STUNServer/src/stun_server/STUNServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/src/stun_server/STUNServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STUNServer/src/stun_server/STUNServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/src/stun_server/STUNServerReceive.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +35,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/wafoe/OneDrive - Windesheim Office365/School/8 Afstuderen SIT/Project/Realizing/G-LocON/STUNServer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wafoe/Documents/GitHub Projects/G-LocON/SignalingServer&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
