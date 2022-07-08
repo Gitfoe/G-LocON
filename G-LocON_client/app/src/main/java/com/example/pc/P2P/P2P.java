@@ -231,7 +231,7 @@ public class P2P implements IP2PReceiver {
 
 
     /**
-     * Store receive data in a list
+     * Store received data in a list
      * @param locationCount Number of times own forwarded location information is acquired
      * @param endPointIP IP address of the other party
      * @param endPointPort Port number of the other party

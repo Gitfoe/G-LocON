@@ -16,7 +16,7 @@ import java.net.InetAddress;
 
 public class STUNServerClientSender extends AsyncTask<String, String, Integer> {
     private DatagramSocket socket;
-    ISTUNServerClientSender istunServerClientSender;
+    private ISTUNServerClientSender istunServerClientSender;
 
     STUNServerClientSender(DatagramSocket socket,ISTUNServerClientSender istunServerClientSender){
         this.socket = socket;

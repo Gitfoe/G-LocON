@@ -2,8 +2,6 @@ package com.example.pc.P2P;
 
 import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -12,7 +10,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 
 /*
  * Created by pc on 2018/06/09.
@@ -54,7 +51,7 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
 
                 if(processType.equals(GET_PERIPHERAL_USER)){
                     System.out.println("processType-----GET_PERIPHERAL_USER");
-                    iP2PReceiver.onGetPeripheralUser(signalingJSONObject.getPerioheralUsers());
+                    iP2PReceiver.onGetPeripheralUser(signalingJSONObject.getPeripheralUsers());
                 }
 
                 else if(processType.equals(DO_UDP_HOLE_PUNCHING)){

@@ -39,7 +39,7 @@ public class SignalingJSONObject {
         return processType;
     }
 
-    public ArrayList<UserInfo> getPerioheralUsers(){
+    public ArrayList<UserInfo> getPeripheralUsers(){
         ArrayList<UserInfo> peripheralUsers = new ArrayList<>();
         JSONArray getArray = null;
         try {

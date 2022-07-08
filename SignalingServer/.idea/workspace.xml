@@ -7,9 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10759fbd-b789-499a-9d69-33b75d662daf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STUNServer/classes/artifacts/STUNServer_jar/STUNServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/classes/artifacts/STUNServer_jar/STUNServer.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signaling_server/SignalingServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/SignalingServerReceive.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,16 +33,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/wafoe/Documents/GitHub Projects/G-LocON/SignalingServer&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/wafoe/Documents/GitHub Projects/G-LocON/SignalingServer",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="signaling_server.StartUp" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="signaling_server.StartUp" />
