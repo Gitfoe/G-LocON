@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SignalingServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SignalingServer_jar</output-path>
+    <root id="archive" name="SignalingServer.jar">
+      <element id="module-output" name="SignalingServer" />
+      <element id="library" level="module" name="java-json.jar" module-name="SignalingServer" />
+    </root>
+  </artifact>
+</component>
