@@ -11,7 +11,9 @@ import com.example.pc.main.SetDate;
 import com.example.pc.main.UserInfo;
 import com.example.pc.main.UtilCommon;
 
+import java.math.BigInteger;
 import java.net.DatagramSocket;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +26,7 @@ public class P2P implements IP2PReceiver {
     private IP2P iP2P;
     private DatagramSocket socket;
     private UserInfo myUserInfo;
-    private ArrayList<UserInfo> peripheralUsers; // Perhiperal user information
+    private ArrayList<UserInfo> peripheralUsers; // Peripheral user information
     private OutputToCSV sendFileInput; // Write send data to CSV
     private OutputToCSV receiveFileInput; // Write receive data to CSV
     private List<MemoryToSendData> sendMemory; // Record send data
@@ -108,9 +110,25 @@ public class P2P implements IP2PReceiver {
 
     public void sendLocation(int locationUpdateCount) {
         EP2PProcess eP2PProcess = EP2PProcess.SendLocation;
-        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, myUserInfo, peripheralUsers, eP2PProcess);
+        UserInfo anonymizedMyUserInfo = anonymizeUser(myUserInfo);
+        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, anonymizedMyUserInfo, peripheralUsers, eP2PProcess);
         MemoryToCSV_Send(locationUpdateCount);
         p2pSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    /**
+     * Anonymizes the peer ID parameter of a single user.
+     * @param userInfo The user that needs their peer ID anonymized.
+     * @returns A copy of the user with an anonymized peer ID.
+     */
+    private UserInfo anonymizeUser(UserInfo userInfo) {
+        SecureRandom randomGenerator = new SecureRandom();
+        byte[] randomBytes = new byte[20];
+        randomGenerator.nextBytes(randomBytes);
+        String randomString = new BigInteger(1, randomBytes).toString(16);
+        UserInfo anonymizedUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+                userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString, userInfo.getSpeed());
+        return anonymizedUserInfo;
     }
 
     /*

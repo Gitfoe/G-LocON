@@ -47,15 +47,12 @@ public class SignalingServerReceive extends Thread {
 					onUpdate(processJSONObject.getUserInfo());
 					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Update terminal information for");
 					showInfo(processJSONObject.getUserInfo(), UPDATE);
-
 				} else if (processType.equals(SEARCH)) { // Searching for
 					onSearch(processJSONObject.getUserInfo(), processJSONObject.getSearchDistance());
 					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Execute search request from");
-
 				} else if (processType.equals(DELETE)) { // Deletion
 					onDelete(processJSONObject.getUserInfo());
 					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Delete terminal information for");
-
 				}
 			} catch (Exception e) {
 

@@ -1,8 +1,10 @@
 package signaling_server;
 
+import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
@@ -40,7 +42,8 @@ public class SignalingServerSend extends Thread {
          */
         if (replyData.equals("srcAddrPortRegisterToNat")) {
             ProcessJSONObject processJSONObject = new ProcessJSONObject();
-            JSONObject jsonObject = processJSONObject.getSrcUserInfo(userInfo);
+            UserInfo anonymizedUserInfo = anonymizeUser(userInfo);
+            JSONObject jsonObject = processJSONObject.getSrcUserInfo(anonymizedUserInfo);
             try {
                 byte[] sendData = jsonObject.toString().getBytes();
                 DatagramPacket sendPacket;
@@ -62,7 +65,8 @@ public class SignalingServerSend extends Thread {
          */
         else if (replyData.equals("replyFromMainActivity")) {
             ProcessJSONObject processJSONObject = new ProcessJSONObject();
-            JSONObject jsonObject = processJSONObject.getUserInfoList(userInfoList);
+            ArrayList<UserInfo> anonymizedUserInfoList = anonymizeUsersInList(userInfoList);
+            JSONObject jsonObject = processJSONObject.getUserInfoList(anonymizedUserInfoList);
             try {
                 byte[] sendData = jsonObject.toString().getBytes();
                 DatagramPacket sendPacket;
@@ -74,5 +78,31 @@ public class SignalingServerSend extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Anonymizes the peer ID parameter of a single user.
+     * @param userInfo The user that needs their peer ID anonymized.
+     * @returns A copy of the user with an anonymized peer ID.
+     */
+    private UserInfo anonymizeUser(UserInfo userInfo) {
+        SecureRandom randomGenerator = new SecureRandom();
+        byte[] randomBytes = new byte[20];
+        randomGenerator.nextBytes(randomBytes);
+        String randomString = new BigInteger(1, randomBytes).toString(16);
+        UserInfo anonymizedUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+                userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString);
+        return anonymizedUserInfo;
+    }
+
+    /**
+     * Anonymizes the peer ID's in a list of userInfo objects.
+     * @param userInfoList The list that has to be anonymized.
+     * @return A copy of the userInfoList with anonymized users.
+     */
+    private ArrayList<UserInfo> anonymizeUsersInList(ArrayList<UserInfo> userInfoList) {
+        ArrayList<UserInfo> anonymizedUserInfoList = new ArrayList<>();
+        userInfoList.forEach(x -> anonymizedUserInfoList.add(anonymizeUser(x)));
+        return anonymizedUserInfoList;
     }
 }

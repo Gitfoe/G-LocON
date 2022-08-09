@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (R.id.start == v.getId()) {
-            utilCommon.setSignalingServerIP("160.16.84.67"); // Server IP address
+            utilCommon.setSignalingServerIP("172.16.8.29"); // Server IP address
             utilCommon.setSignalingServerPort(55555); // Server port number
-            utilCommon.setStunServerIP("160.16.84.67");  // Server IP address
+            utilCommon.setStunServerIP("172.16.8.29");  // Server IP address
             utilCommon.setStunServerPort(55554); // Server port number
             utilCommon.setPeerId(peerId.getText().toString());
             peerId.setVisibility(View.INVISIBLE);
@@ -222,17 +222,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                String tapPeerId = null;
+                String tapPeerPublicIP = null;
+                Integer tapPeerPublicPort = null;
+                String tapPeerPrivateIP = null;
+                Integer tapPeerPrivatePort = null;
                 UserInfo tapPeer = null;
                 for(int i = 0; i < markerList.size(); i++){
                     if(marker.equals(markerList.get(i).getMarker())){
-                        tapPeerId = markerList.get(i).getPeerId();
+                        tapPeerPublicIP = markerList.get(i).getPublicIP();
+                        tapPeerPublicPort = markerList.get(i).getPublicPort();
+                        tapPeerPublicIP = markerList.get(i).getPrivateIP();
+                        tapPeerPublicPort = markerList.get(i).getPrivatePort();
                         break;
                     }
                 }
 
                 for(int i = 0; i < p2p.getPeripheralUsers().size(); i++){
-                    if(tapPeerId.equals(p2p.getPeripheralUsers().get(i).getPeerId())){
+                    if(markerList.get(i).getPublicIP().equals(p2p.getPeripheralUsers().get(i).getPublicIP()) &&
+                            markerList.get(i).getPublicPort() == (p2p.getPeripheralUsers().get(i).getPublicPort()) &&
+                            markerList.get(i).getPrivateIP().equals(p2p.getPeripheralUsers().get(i).getPrivateIP()) &&
+                            markerList.get(i).getPrivatePort() == (p2p.getPeripheralUsers().get(i).getPrivatePort())){
                         tapPeer = p2p.getPeripheralUsers().get(i);
                         break;
                     }
@@ -366,7 +375,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < markerList.size(); i++) {
                 int j = 0;
                 for (; j < peripheralUserInfos.size(); j++) {
-                    if (markerList.get(i).getPeerId().equals(peripheralUserInfos.get(j).getPeerId())) {
+                    if (markerList.get(i).getPublicIP().equals(peripheralUserInfos.get(j).getPublicIP()) &&
+                            markerList.get(i).getPublicPort() == (peripheralUserInfos.get(j).getPublicPort()) &&
+                            markerList.get(i).getPrivateIP().equals(peripheralUserInfos.get(j).getPrivateIP()) &&
+                            markerList.get(i).getPrivatePort() == (peripheralUserInfos.get(j).getPrivatePort())) {
                         continueMarker.add(markerList.get(i));
                         break;
                     }
@@ -408,7 +420,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //region Perform marker updates
         for (int i = 0; i < markerList.size(); i++) {
             final int tmp = i;
-            if (markerList.get(i).getPeerId().equals(userInfo.getPeerId())) { //ぬるぽでる
+            if (markerList.get(i).getPublicIP().equals(userInfo.getPublicIP()) && markerList.get(i).getPublicPort() == (userInfo.getPublicPort()) &&
+                    markerList.get(i).getPrivateIP().equals(userInfo.getPrivateIP()) && markerList.get(i).getPrivatePort() == (userInfo.getPrivatePort())) { // Boil out
                 if (userInfo.getSpeed() - myUserInfo.getSpeed() > TOLERANCE_SPEED) {
                     runOnUiThread(new Runnable() {
                         public void run() {
@@ -437,8 +450,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             public void run() {
                 Marker setMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(userInfo.getLatitude(), userInfo.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                String setPeerId = userInfo.getPeerId();
-                markerList.add(new MarkerInfo(setMarker, setPeerId));
+                markerList.add(new MarkerInfo(setMarker, userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(), userInfo.getPrivatePort()));
                 addMarker = NOT_ADD_MARKER_PROGRESS;
             }
         });
