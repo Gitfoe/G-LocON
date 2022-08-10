@@ -41,21 +41,21 @@ public class SignalingServerReceive extends Thread {
 
 				if (processType.equals(REGISTER)) { // Registration
 					onRegister(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Register terminal information for");
+					System.out.println("Register terminal information for peer" + processJSONObject.getUserInfo().getPeerId());
 					showInfo(processJSONObject.getUserInfo(), REGISTER);
 				} else if (processType.equals(UPDATE)) { // Update
 					onUpdate(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Update terminal information for");
+					System.out.println( "Update terminal information for peer " + processJSONObject.getUserInfo().getPeerId());
 					showInfo(processJSONObject.getUserInfo(), UPDATE);
 				} else if (processType.equals(SEARCH)) { // Searching for
 					onSearch(processJSONObject.getUserInfo(), processJSONObject.getSearchDistance());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Execute search request from");
+					System.out.println("Execute search request from peer " + processJSONObject.getUserInfo().getPeerId());
 				} else if (processType.equals(DELETE)) { // Deletion
 					onDelete(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Delete terminal information for");
+					System.out.println("Delete terminal information for peer " + processJSONObject.getUserInfo().getPeerId());
 				}
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 		}
 	}
@@ -68,8 +68,14 @@ public class SignalingServerReceive extends Thread {
 	public void onRegister(UserInfo userInfo) {
 		userInfoList.add(userInfo);
 		DatabaseConnector.insertUserInfoInDatabase(userInfo);
-		System.out.println("REGISTER: Size of current userInfos" + userInfoList.size());
+		System.out.println("REGISTER: Size of current userInfos: " + userInfoList.size());
 		//System.out.println(userInfo);
+
+		// After registering the user, we need to send their settings back to them to configure the correct settings within the application.
+		SignalingServerSend settings = new SignalingServerSend(socket, userInfo, null, "sendUserSettings");
+		settings.start();
+		System.out.println("");
+		System.out.println("sendUserSettings for " + userInfo.getPeerId() + " started.");
 	}
 
 	/**
@@ -144,10 +150,10 @@ public class SignalingServerReceive extends Thread {
 		SignalingServerSend UDPHolePunchingOtherUsers = new SignalingServerSend(socket, userInfo, searchResultUserList, "srcAddrPortRegisterToNat");
 		UDPHolePunchingOtherUsers.start();
 		System.out.println("");
-		System.out.println(userInfo.getPeerId() + "srcAddrPortRegisterToNat started");
+		System.out.println("srcAddrPortRegisterToNat for " + userInfo.getPeerId() + " started.");
 		SignalingServerSend reply = new SignalingServerSend(socket, userInfo, searchResultUserList, "replyFromMainActivity");
 		reply.start();
-		System.out.println(userInfo.getPeerId() + "replyFromMainActivity started");
+		System.out.println("replyFromMainActivity for " + userInfo.getPeerId() + " started.");
 		System.out.println("");
 	}
 

@@ -112,10 +112,10 @@ public class ProcessJSONObject {
     }
 
     /**
-     * Make the sender's user information into a JSONObject
+     * Make the sender's user information into a JSONObject.
      *
-     * @param userInfo Source User Information
-     * @return userInfo as JSON
+     * @param userInfo Source User Information.
+     * @return userInfo as JSON.
      */
     public JSONObject getSrcUserInfo(UserInfo userInfo) {
         JSONObject jsonObject = new JSONObject();
@@ -131,7 +131,23 @@ public class ProcessJSONObject {
             //jsonObject.put("speed",userInfo.getSpeed());
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        return jsonObject;
+    }
 
+    /**
+     * Make the sender's user settings into a JSONObject.
+     * @param userSettings The settings obtained from the database of the user.
+     * @return userSettings as JSON.
+     */
+    public JSONObject getSrcUserSettings(UserSettings userSettings) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("processType", "getSrcUserSettings");
+            jsonObject.put("peer_id", userSettings.getPeer_id());
+            jsonObject.put("li_enabled", userSettings.isLi_enabled());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return jsonObject;
     }

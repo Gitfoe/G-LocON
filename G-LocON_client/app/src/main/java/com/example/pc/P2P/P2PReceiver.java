@@ -30,6 +30,7 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
         final String GET_PERIPHERAL_USER = "getPeripheralUserInfoList";
         final String RECEIVE_MSG_PEER = "peermsg";
         final String DO_UDP_HOLE_PUNCHING = "doUDPHolePunching";
+        final String GET_SRC_USER_SETTINGS = "getSrcUserSettings";
         final String SEND_DATA = "SendLocation";
         final String ACK = "Ack";
         DatagramPacket receivePacket = new DatagramPacket(new byte[1024], 1024);
@@ -49,14 +50,19 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
                 //Log.d("Receive","Source IP:"+receivePacket.getAddress());
 
 
-                if(processType.equals(GET_PERIPHERAL_USER)){
+                if(processType.equals(GET_PERIPHERAL_USER)) {
                     System.out.println("processType-----GET_PERIPHERAL_USER");
                     iP2PReceiver.onGetPeripheralUser(signalingJSONObject.getPeripheralUsers());
                 }
 
-                else if(processType.equals(DO_UDP_HOLE_PUNCHING)){
+                else if(processType.equals(DO_UDP_HOLE_PUNCHING)) {
                     System.out.println("processType-----DO_UDP_HOLE_PUNCHING");
                     iP2PReceiver.onDoUDPHolePunching(signalingJSONObject.getSrcUser());
+                }
+
+                else if (processType.equals((GET_SRC_USER_SETTINGS))) {
+                    System.out.println("processType-----GET_SRC_USER_SETTINGS");
+                    iP2PReceiver.onGetSrcUserSettings(signalingJSONObject.getSrcUserSettings());
                 }
 
                 else if(processType.equals(SEND_DATA)) {
@@ -75,7 +81,7 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
                 }
                 */
             } catch (JSONException e) {
-                Log.d("P2P", "Error:"+e);
+                Log.d("P2P", "Error:" + e);
             }
         } while (true);
     }

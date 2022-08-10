@@ -25,8 +25,8 @@
         android:id="@+id/peerId"
         android:layout_width="218dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="edit peerId"
         android:inputType="textPersonName"
@@ -39,9 +39,9 @@
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,9 +54,9 @@
         android:id="@+id/end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:text="End"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,5 +106,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.778" />
+
+    <Switch
+        android:id="@+id/li_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LI"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

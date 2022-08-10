@@ -7,16 +7,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10759fbd-b789-499a-9d69-33b75d662daf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/java_json.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_30.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SignalingServer.eml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/IThrowListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/UserSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/signaling_server/UserSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/ESignalingProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/ESignalingProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/IP2PReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/IP2PReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/Signaling.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/Signaling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/ProcessJSONObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/ProcessJSONObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/signaling_server/SignalingServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/SignalingServerReceive.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/SignalingServerSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/SignalingServerSend.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

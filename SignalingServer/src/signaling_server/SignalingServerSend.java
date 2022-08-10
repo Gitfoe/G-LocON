@@ -36,7 +36,7 @@ public class SignalingServerSend extends Thread {
     @Override
     public void run() {
         /**
-         * For srcAddrPortRegisterToNat
+         * For srcAddrPortRegisterToNat.
          * Converts the source user's UserInfo class to a JSONObject and sends the JSONObject to the users in the corresponding range (userInfoList).
          * After receiving the data, the relevant user stores the sender's Addr and port in the NAT.
          */
@@ -59,8 +59,8 @@ public class SignalingServerSend extends Thread {
         }
 
         /**
-         * For replyFromMainActivity
-         * Return search results to the sender user
+         * For replyFromMainActivity.
+         * Return search results to the sender user.
          * Search results are converted to JSONObjects before being sent.
          */
         else if (replyData.equals("replyFromMainActivity")) {
@@ -74,6 +74,27 @@ public class SignalingServerSend extends Thread {
                         sendData.length, InetAddress.getByName(userInfo.getPublicIP()), userInfo.getPublicPort());
                 socket.send(sendPacket);
                 System.out.println("replyFromMainActivity - Search results sent to " + userInfo.getPeerId() + " (own terminal) completed");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * For sendUserSettings.
+         * Retrieves the user settings from the database and sends it to the user.
+         * Settings are converted to JSONObjects before being sent.
+         */
+        else if (replyData.equals("sendUserSettings")) {
+            ProcessJSONObject processJSONObject = new ProcessJSONObject();
+            UserSettings userSettings = DatabaseConnector.obtainUserSettings(userInfo);
+            JSONObject jsonObject = processJSONObject.getSrcUserSettings(userSettings);
+            try {
+                byte[] sendData = jsonObject.toString().getBytes();
+                DatagramPacket sendPacket;
+                sendPacket = new DatagramPacket(sendData,
+                        sendData.length, InetAddress.getByName(userInfo.getPublicIP()), userInfo.getPublicPort());
+                socket.send(sendPacket);
+                System.out.println("sendUserSettings - Setting data sent to " + userInfo.getPeerId() + " (own terminal)");
             } catch (Exception e) {
                 e.printStackTrace();
             }

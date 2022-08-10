@@ -9,5 +9,6 @@ public enum ESignalingProcess {
     REGISTER,
     UPDATE,
     SEARCH,
-    DELETE
+    DELETE,
+    SETTINGS
 }

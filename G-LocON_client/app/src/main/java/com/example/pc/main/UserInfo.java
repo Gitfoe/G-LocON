@@ -14,9 +14,7 @@ public class UserInfo {
     private String peerId;
     private double speed;
 
-    public UserInfo() {
-
-    }
+    public UserInfo() { }
 
     public UserInfo(String publicIP, int publicPort, String privateIP, int privatePort, double latitude, double longitude, String peerId, double speed) {
         this.publicIP = publicIP;
@@ -92,5 +90,6 @@ public class UserInfo {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
+
 }
 

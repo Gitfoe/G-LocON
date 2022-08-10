@@ -49,62 +49,29 @@ public class Signaling extends AsyncTask<String, String, Integer> {
         JSONObject jsonObject;
 
         switch(eSignalingProcess){
-            case REGISTER:
-                jsonObject = signalingJSONObject.covUserInfoForRegister(userInfo);
-                try {
-                    byte[] sendData = jsonObject.toString().getBytes();
-                    DatagramPacket sendPacket;
-                    sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
-                    socket.send(sendPacket);
-                    System.out.println("REGISTER transmission complete");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case UPDATE:
-                jsonObject = signalingJSONObject.covUserInfoForUpdate(userInfo);
-                try {
-                    byte[] sendData = jsonObject.toString().getBytes();
-                    DatagramPacket sendPacket;
-                    sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
-                    socket.send(sendPacket);
-                    System.out.println("UPDATE transmission complete");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
             case SEARCH:
                 jsonObject = signalingJSONObject.covUserInfoForSearch(userInfo, searchDistance);
-                try {
-                    byte[] sendData = jsonObject.toString().getBytes();
-                    DatagramPacket sendPacket;
-                    sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
-                    socket.send(sendPacket);
-                    System.out.println("SEARCH transmission complete");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                sendToSignalingServer(jsonObject, utilCommon, eSignalingProcess);
                 break;
 
-            case DELETE:
-                jsonObject = signalingJSONObject.covUserInfoForDelete(userInfo);
-                try {
-                    byte[] sendData = jsonObject.toString().getBytes();
-                    DatagramPacket sendPacket;
-                    sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
-                    socket.send(sendPacket);
-                    System.out.println("DELETE transmission complete");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            default:
+            default: // Default case is sufficient for all other signaling processes
+                jsonObject = signalingJSONObject.covUserInfo(userInfo, eSignalingProcess);
+                sendToSignalingServer(jsonObject, utilCommon, eSignalingProcess);
                 break;
         }
         return 0;
+    }
+
+    private void sendToSignalingServer(JSONObject jsonObject, UtilCommon utilCommon, ESignalingProcess eSignalingProcess) {
+        try {
+            byte[] sendData = jsonObject.toString().getBytes();
+            DatagramPacket sendPacket;
+            sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(utilCommon.getSignalingServerIP()), utilCommon.getSignalingServerPort());
+            socket.send(sendPacket);
+            System.out.println(eSignalingProcess.name() + " transmission complete");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -37,4 +37,35 @@ public final class DatabaseConnector {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Obtains the configured userSettings of a userInfo from the database.
+     * @param userInfo The user that wants to know their settings.
+     * @return Their settings.
+     */
+    public static UserSettings obtainUserSettings(UserInfo userInfo) {
+        // Open a connection
+        try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
+            // Build the string for inserting
+            String selectSql = "SELECT user_id, li_enabled FROM user_settings WHERE user_id = " + userInfo.getPeerId();
+            // Execute the string on the database
+            ResultSet resultSet = stmt.executeQuery(selectSql);
+
+            String user_id = null;
+            boolean li_enabled = false;
+            while (resultSet.next()) {
+                // Retrieve by column name
+                user_id = resultSet.getString("user_id");
+                li_enabled = resultSet.getBoolean("li_enabled");
+            }
+
+            UserSettings userSettings = new UserSettings(user_id, li_enabled);
+            return userSettings;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Trying to obtain the setting for peer " + userInfo.getPeerId() +
+                    " failed, using NAT to return 'privacy by default' settings (every optional setting disabled)");
+            return new UserSettings(userInfo.getPeerId(), false);
+        }
+    }
 }

@@ -4,10 +4,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.pc.P2P.IP2P;
@@ -42,13 +45,14 @@ import java.util.List;
 /**
  * Basic form of V2V
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener, OnMapReadyCallback, ISTUNServerClient, IP2P {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener, OnMapReadyCallback, ISTUNServerClient, IP2P, IThrowListener{
     private EditText peerId;
     private Button start;
     private Button end;
     private Button plus;
     private Button minus;
     private Button angle;
+    private Switch li_switch;
     private GoogleMap mMap;
     private Location mLocation; // Current location
     private float nowCameraAngle = 0; // Current camera angle
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     UtilCommon utilCommon; // Common data such as global IP of the server
     UserInfo myUserInfo; // Own information
+    UserSettings myUserSettings; // Own settings
     private DatagramSocket socket;
     final static int NAT_TRAVEL_OK = 1; // OK if you have already obtained your own NAT converted information
     private int natTravel = 0; // Support for NAT_TRAVEL_OK
@@ -80,12 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        end = (Button) findViewById(R.id.end);
+        end = (Button)findViewById(R.id.end);
         plus = (Button)findViewById(R.id.plus);
         minus = (Button)findViewById(R.id.minus);
         angle = (Button)findViewById(R.id.angle);
+        li_switch = (Switch)findViewById(R.id.li_switch);
         end.setOnClickListener(this);
         end.setVisibility(View.INVISIBLE);
+        li_switch.setVisibility(View.INVISIBLE);
         peerId = (EditText) findViewById(R.id.peerId);
         start = (Button) findViewById(R.id.start);
         start.setOnClickListener(this);
@@ -103,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mapFragment.getMapAsync(this);
     }
-
 
     /**
      * Socket Generation Methods
@@ -134,10 +140,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             peerId.setVisibility(View.INVISIBLE);
             start.setVisibility(View.INVISIBLE);
             end.setVisibility(View.VISIBLE);
+            li_switch.setVisibility(View.VISIBLE);
 
             plus.setOnClickListener(this);
             minus.setOnClickListener(this);
             angle.setOnClickListener(this);
+            li_switch.setOnClickListener(this);
 
             mLocation = new Location("");
             //mLocation.setLatitude(35.951003); // In front of the university
@@ -175,6 +183,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 angle.setText("HEADUP");
             }
         }
+
+        else if (R.id.li_switch == v.getId()) {
+            boolean on = li_switch.isChecked();
+
+            if (on) {
+                // Write code to send this to L-tracker
+            } else {
+                // Likewise
+            }
+        }
     }
 
     /**
@@ -196,14 +214,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myUserInfo.setLatitude(35.409716);
         myUserInfo.setLongitude(139.588568);
 
-        p2p = new P2P(socket, myUserInfo, this);
+        p2p = new P2P(socket, myUserInfo, myUserSettings, this);
+        p2p.addThrowListener(this);
+
         natTravel = NAT_TRAVEL_OK;
         p2p.p2pReceiverStart();
         p2p.signalingRegister();
+        p2p.signalingSettings();
+
         MyLocation myLocation = new MyLocation(this, this, 1);
         myLocation.createGoogleApiClient();
     }
-
 
     /**
      * Event listener called when map is available
@@ -471,11 +492,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void displayToast(final String msg) {
-        Handler h = new Handler(getApplication().getMainLooper());
-        h.post(new Runnable() {
+        Handler handler = new Handler(getApplication().getMainLooper());
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(getApplication(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void Catch(UserSettings userSettings) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                li_switch.setChecked(userSettings.isLi_enabled());
             }
         });
     }

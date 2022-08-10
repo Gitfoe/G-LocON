@@ -3,12 +3,14 @@ package com.example.pc.P2P;
 import android.location.Location;
 import android.os.AsyncTask;
 
+import com.example.pc.main.IThrowListener;
 import com.example.pc.main.MemoryResult;
 import com.example.pc.main.MemoryToReceiveData;
 import com.example.pc.main.MemoryToSendData;
 import com.example.pc.main.OutputToCSV;
 import com.example.pc.main.SetDate;
 import com.example.pc.main.UserInfo;
+import com.example.pc.main.UserSettings;
 import com.example.pc.main.UtilCommon;
 
 import java.math.BigInteger;
@@ -26,23 +28,33 @@ public class P2P implements IP2PReceiver {
     private IP2P iP2P;
     private DatagramSocket socket;
     private UserInfo myUserInfo;
+    private UserSettings myUserSettings;
     private ArrayList<UserInfo> peripheralUsers; // Peripheral user information
     private OutputToCSV sendFileInput; // Write send data to CSV
     private OutputToCSV receiveFileInput; // Write receive data to CSV
     private List<MemoryToSendData> sendMemory; // Record send data
     private List<MemoryToReceiveData> receiveMemory; // Record receive data
+    private List<IThrowListener> listeners = new ArrayList<IThrowListener>();
 
     /**
      * Default constructor
      * Run setUpMemory to record data to csv
      */
-    public P2P(DatagramSocket socket, UserInfo myUserInfo, IP2P iP2P) {
+    public P2P(DatagramSocket socket, UserInfo myUserInfo, UserSettings myUserSettings, IP2P iP2P) {
         this.iP2P = iP2P;
         this.socket = socket;
         this.myUserInfo = myUserInfo;
-        peripheralUsers = new ArrayList<>();
-
+        this.myUserSettings = myUserSettings;
+        this.peripheralUsers = new ArrayList<>();
         setUpMemory();
+    }
+
+    /**
+     * To add someone to the list of catchers for an event.
+     * @param toAdd The catcher.
+     */
+    public void addThrowListener(IThrowListener toAdd){
+        listeners.add(toAdd);
     }
 
     public ArrayList<UserInfo> getPeripheralUsers(){
@@ -63,7 +75,6 @@ public class P2P implements IP2PReceiver {
         P2PReceiver p2pReceiver = new P2PReceiver(socket, this);
         p2pReceiver.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
 
     //region Connection system to SignalingServer
     public void signalingRegister() {
@@ -92,6 +103,13 @@ public class P2P implements IP2PReceiver {
         eSignalingProcess = ESignalingProcess.DELETE;
         Signaling signaling = new Signaling(socket, myUserInfo, eSignalingProcess);
         signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void signalingSettings() { // Not working yet
+        ESignalingProcess eSignalingProcess;
+        eSignalingProcess = ESignalingProcess.SETTINGS;
+        //Signaling signaling = new Signaling(socket, myUserInfo, eSignalingProcess);
+        //signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
     //endregion
 
@@ -198,6 +216,18 @@ public class P2P implements IP2PReceiver {
                 iP2P.onGetDetailUserInfo(peripheralUsers.get(i), peripheralUsers);
                 return;
             }
+        }
+    }
+
+    /**
+     * Sets the received user settings from the server
+     * @param userSettings
+     */
+    @Override
+    public void onGetSrcUserSettings(UserSettings userSettings) {
+        myUserSettings = userSettings;
+        for (IThrowListener hl : listeners) {
+            hl.Catch(userSettings);
         }
     }
 
