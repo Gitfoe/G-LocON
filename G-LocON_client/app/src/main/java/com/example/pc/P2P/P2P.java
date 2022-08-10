@@ -110,7 +110,7 @@ public class P2P implements IP2PReceiver {
 
     public void sendLocation(int locationUpdateCount) {
         EP2PProcess eP2PProcess = EP2PProcess.SendLocation;
-        UserInfo anonymizedMyUserInfo = anonymizeUser(myUserInfo);
+        UserInfo anonymizedMyUserInfo = anonymizeUser(myUserInfo); // Send the user info anonymously via P2P
         P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, anonymizedMyUserInfo, peripheralUsers, eP2PProcess);
         MemoryToCSV_Send(locationUpdateCount);
         p2pSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

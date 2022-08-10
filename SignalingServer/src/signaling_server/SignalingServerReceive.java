@@ -67,6 +67,7 @@ public class SignalingServerReceive extends Thread {
 	 */
 	public void onRegister(UserInfo userInfo) {
 		userInfoList.add(userInfo);
+		DatabaseConnector.insertUserInfoInDatabase(userInfo);
 		System.out.println("REGISTER: Size of current userInfos" + userInfoList.size());
 		//System.out.println(userInfo);
 	}
@@ -91,6 +92,7 @@ public class SignalingServerReceive extends Thread {
 			if (userInfo.getPublicIP().equals(userInfo.getPublicIP()) && userInfoList.get(i).getPublicPort() == userInfo.getPublicPort() &&
 					userInfoList.get(i).getPrivateIP().equals(userInfo.getPrivateIP()) && userInfoList.get(i).getPrivatePort() == userInfo.getPrivatePort()) {
 				userInfoList.set(i, userInfo);
+				DatabaseConnector.insertUserInfoInDatabase(userInfo);
 				break;
 			}
 		}
