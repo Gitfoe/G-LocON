@@ -60,6 +60,22 @@ public class ProcessJSONObject {
     }
 
     /**
+     * Mold and return user settings
+     *
+     * @return UserSettings of the sender
+     */
+    public UserSettings getUserSettings() {
+        UserSettings userSettings = new UserSettings();
+        try {
+            userSettings.setPeer_id(jsonObject.getString("peer_id"));
+            userSettings.setLi_enabled(jsonObject.getBoolean("li_enabled"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return userSettings;
+    }
+
+    /**
      * Get search range from json
      *
      * @return Cable range

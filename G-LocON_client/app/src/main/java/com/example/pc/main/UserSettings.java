@@ -17,9 +17,7 @@ public class UserSettings {
         this.peer_id = peer_id;
     }
 
-    public boolean isLi_enabled() {
-        return li_enabled;
-    }
+    public boolean isLi_enabled() { return li_enabled; }
 
     public void setLi_enabled(boolean li_enabled) {
         this.li_enabled = li_enabled;

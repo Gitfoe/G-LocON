@@ -7,6 +7,8 @@ public class UserSettings {
     private String peer_id;
     private boolean li_enabled;
 
+    public UserSettings() { }
+
     public UserSettings(String peerId, boolean li_enabled) {
         this.peer_id = peerId;
         this.li_enabled = li_enabled;

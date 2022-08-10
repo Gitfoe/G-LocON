@@ -185,13 +185,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else if (R.id.li_switch == v.getId()) {
-            boolean on = li_switch.isChecked();
-
-            if (on) {
-                // Write code to send this to L-tracker
-            } else {
-                // Likewise
-            }
+            myUserSettings.setLi_enabled(li_switch.isChecked());
+            p2p.signalingSettings(myUserSettings);
         }
     }
 
@@ -214,13 +209,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myUserInfo.setLatitude(35.409716);
         myUserInfo.setLongitude(139.588568);
 
-        p2p = new P2P(socket, myUserInfo, myUserSettings, this);
-        p2p.addThrowListener(this);
+        p2p = new P2P(socket, myUserInfo, this);
+        p2p.addThrowListener(this); // Subscribe to the retrieval of user settings event
 
         natTravel = NAT_TRAVEL_OK;
         p2p.p2pReceiverStart();
         p2p.signalingRegister();
-        p2p.signalingSettings();
 
         MyLocation myLocation = new MyLocation(this, this, 1);
         myLocation.createGoogleApiClient();
@@ -503,6 +497,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void Catch(UserSettings userSettings) {
+        myUserSettings = userSettings; // Set user settings for later usage in this class
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

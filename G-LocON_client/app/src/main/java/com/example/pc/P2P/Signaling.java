@@ -2,6 +2,7 @@ package com.example.pc.P2P;
 import android.os.AsyncTask;
 
 import com.example.pc.main.UserInfo;
+import com.example.pc.main.UserSettings;
 import com.example.pc.main.UtilCommon;
 
 import org.json.JSONObject;
@@ -18,25 +19,31 @@ import java.net.InetAddress;
 public class Signaling extends AsyncTask<String, String, Integer> {
     private DatagramSocket socket;
     private UserInfo userInfo;
+    private UserSettings userSettings;
     private ESignalingProcess eSignalingProcess;
     private double searchDistance;
 
-    Signaling(DatagramSocket socket, UserInfo userInfo,ESignalingProcess eSignalingProcess) {
+    Signaling(DatagramSocket socket, UserInfo userInfo, ESignalingProcess eSignalingProcess) {
         this.socket = socket;
         this.userInfo = userInfo;
         this.eSignalingProcess = eSignalingProcess;
     }
 
-    Signaling(DatagramSocket socket,UserInfo userInfo,double searchDistance,ESignalingProcess eSignalingProcess) {
+    Signaling(DatagramSocket socket, UserInfo userInfo, double searchDistance, ESignalingProcess eSignalingProcess) {
         this.socket = socket;
         this.userInfo = userInfo;
         this.searchDistance = searchDistance;
         this.eSignalingProcess = eSignalingProcess;
     }
 
-    @Override
-    protected void onPreExecute() {
+    Signaling(DatagramSocket socket, UserSettings userSettings, ESignalingProcess eSignalingProcess) {
+        this.socket = socket;
+        this.userSettings = userSettings;
+        this.eSignalingProcess = eSignalingProcess;
     }
+
+    @Override
+    protected void onPreExecute() { }
 
     /**
      * Send data to signaling server
@@ -51,6 +58,11 @@ public class Signaling extends AsyncTask<String, String, Integer> {
         switch(eSignalingProcess){
             case SEARCH:
                 jsonObject = signalingJSONObject.covUserInfoForSearch(userInfo, searchDistance);
+                sendToSignalingServer(jsonObject, utilCommon, eSignalingProcess);
+                break;
+
+            case SETTINGS:
+                jsonObject = signalingJSONObject.covUserSettings(userSettings, eSignalingProcess);
                 sendToSignalingServer(jsonObject, utilCommon, eSignalingProcess);
                 break;
 

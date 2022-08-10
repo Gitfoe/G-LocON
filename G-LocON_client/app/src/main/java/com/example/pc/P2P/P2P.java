@@ -34,17 +34,16 @@ public class P2P implements IP2PReceiver {
     private OutputToCSV receiveFileInput; // Write receive data to CSV
     private List<MemoryToSendData> sendMemory; // Record send data
     private List<MemoryToReceiveData> receiveMemory; // Record receive data
-    private List<IThrowListener> listeners = new ArrayList<IThrowListener>();
+    private List<IThrowListener> listeners = new ArrayList<IThrowListener>(); // For the updating of user settings
 
     /**
      * Default constructor
      * Run setUpMemory to record data to csv
      */
-    public P2P(DatagramSocket socket, UserInfo myUserInfo, UserSettings myUserSettings, IP2P iP2P) {
+    public P2P(DatagramSocket socket, UserInfo myUserInfo, IP2P iP2P) {
         this.iP2P = iP2P;
         this.socket = socket;
         this.myUserInfo = myUserInfo;
-        this.myUserSettings = myUserSettings;
         this.peripheralUsers = new ArrayList<>();
         setUpMemory();
     }
@@ -105,11 +104,11 @@ public class P2P implements IP2PReceiver {
         signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public void signalingSettings() { // Not working yet
+    public void signalingSettings(UserSettings userSettings) {
         ESignalingProcess eSignalingProcess;
         eSignalingProcess = ESignalingProcess.SETTINGS;
-        //Signaling signaling = new Signaling(socket, myUserInfo, eSignalingProcess);
-        //signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        Signaling signaling = new Signaling(socket, userSettings, eSignalingProcess);
+        signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
     //endregion
 

@@ -116,6 +116,23 @@ public class SignalingJSONObject {
     }
 
     /**
+     * Register UserSettings with the signaling server
+     * @param userSettings User settings
+     * @return userSettings as JSON
+     */
+    public JSONObject covUserSettings(UserSettings userSettings, ESignalingProcess eSignalingProcess) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("processType", eSignalingProcess.name());
+            jsonObject.put("peer_id",userSettings.getPeer_id());
+            jsonObject.put("li_enabled",userSettings.isLi_enabled());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    /**
      * Query the signaling server for a search
      * @param userInfo User information
      * @return userInfo and distance as JSON

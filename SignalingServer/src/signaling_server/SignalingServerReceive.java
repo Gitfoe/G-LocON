@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import static signaling_server.DatabaseConnector.updateUserSettingsInDatabase;
+
 public class SignalingServerReceive extends Thread {
 	private DatagramSocket socket;
 	private ArrayList<UserInfo> userInfoList;
@@ -26,6 +28,7 @@ public class SignalingServerReceive extends Thread {
 		final String UPDATE = "UPDATE";
 		final String SEARCH = "SEARCH";
 		final String DELETE = "DELETE";
+		final String SETTINGS = "SETTINGS";
 
 		while (true) {
 			// Receive data
@@ -53,6 +56,9 @@ public class SignalingServerReceive extends Thread {
 				} else if (processType.equals(DELETE)) { // Deletion
 					onDelete(processJSONObject.getUserInfo());
 					System.out.println("Delete terminal information for peer " + processJSONObject.getUserInfo().getPeerId());
+				} else if (processType.equals(SETTINGS)) { // Updating user settings
+					onSettings(processJSONObject.getUserSettings());
+					System.out.println("Settings update terminal information for peer " + processJSONObject.getUserSettings().getPeer_id());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -177,6 +183,10 @@ public class SignalingServerReceive extends Thread {
 				break;
 			}
 		}
+	}
+
+	public void onSettings(UserSettings userSettings) {
+		updateUserSettingsInDatabase(userSettings);
 	}
 
 	/**
