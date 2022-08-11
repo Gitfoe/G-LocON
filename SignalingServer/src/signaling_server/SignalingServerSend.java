@@ -42,8 +42,8 @@ public class SignalingServerSend extends Thread {
          */
         if (replyData.equals("srcAddrPortRegisterToNat")) {
             ProcessJSONObject processJSONObject = new ProcessJSONObject();
-            UserInfo anonymizedUserInfo = anonymizeUser(userInfo);
-            JSONObject jsonObject = processJSONObject.getSrcUserInfo(anonymizedUserInfo);
+            UserInfo privacyUserInfo = applyPrivacyMeasuresToUserInfo(userInfo);
+            JSONObject jsonObject = processJSONObject.getSrcUserInfo(privacyUserInfo);
             try {
                 byte[] sendData = jsonObject.toString().getBytes();
                 DatagramPacket sendPacket;
@@ -65,8 +65,8 @@ public class SignalingServerSend extends Thread {
          */
         else if (replyData.equals("replyFromMainActivity")) {
             ProcessJSONObject processJSONObject = new ProcessJSONObject();
-            ArrayList<UserInfo> anonymizedUserInfoList = anonymizeUsersInList(userInfoList);
-            JSONObject jsonObject = processJSONObject.getUserInfoList(anonymizedUserInfoList);
+            ArrayList<UserInfo> privacyMeasuresUserInfoList = applyPrivacyMeasuresToUserInfoInList(userInfoList);
+            JSONObject jsonObject = processJSONObject.getUserInfoList(privacyMeasuresUserInfoList);
             try {
                 byte[] sendData = jsonObject.toString().getBytes();
                 DatagramPacket sendPacket;
@@ -101,29 +101,65 @@ public class SignalingServerSend extends Thread {
         }
     }
 
+    //region Privacy methods
     /**
-     * Anonymizes the peer ID parameter of a single user.
+     * Applies all the privacy measures to users in a list.
+     * @param userInfoList The list of user info's.
+     * @return A copy of the list of users with applied privacy measures.
+     */
+    private ArrayList<UserInfo> applyPrivacyMeasuresToUserInfoInList(ArrayList<UserInfo> userInfoList) {
+        ArrayList<UserInfo> copyUserInfoList = new ArrayList<UserInfo>();
+        for (int i = 0; i < userInfoList.size(); i++) {
+            copyUserInfoList.add(applyPrivacyMeasuresToUserInfo(userInfoList.get(i)));
+        }
+        return copyUserInfoList;
+    }
+
+    /**
+     * Apply all privacy measures to a user.
+     * @param userInfo The user that needs to get their privacy settings applied.
+     * @return A copy of the userInfo with applied privacy settings.
+     */
+    private UserInfo applyPrivacyMeasuresToUserInfo(UserInfo userInfo) {
+        UserInfo copyUserInfo = userInfo;
+        copyUserInfo = removePersonalDataFromUserInfoAccordingToUserSettings(userInfo);
+        copyUserInfo = anonymizeUser(copyUserInfo);
+        return copyUserInfo;
+    }
+
+    /**
+     * Anonymizes the peer ID parameter of a single user by replacing it with a random string of 40 characters.
      * @param userInfo The user that needs their peer ID anonymized.
      * @returns A copy of the user with an anonymized peer ID.
      */
     private UserInfo anonymizeUser(UserInfo userInfo) {
+        // Generate random string of 40 characters to be used as a peer ID
         SecureRandom randomGenerator = new SecureRandom();
         byte[] randomBytes = new byte[20];
         randomGenerator.nextBytes(randomBytes);
         String randomString = new BigInteger(1, randomBytes).toString(16);
+        // Create copy of userInfo with anonymized peerID
         UserInfo anonymizedUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
                 userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString);
         return anonymizedUserInfo;
     }
 
     /**
-     * Anonymizes the peer ID's in a list of userInfo objects.
-     * @param userInfoList The list that has to be anonymized.
-     * @return A copy of the userInfoList with anonymized users.
+     * Removes certain personal data from UserInfo according to the settings of that user.
+     * @param userInfo The user that has its settings to be configured for.
+     * @return A copy of the userInfo with configured settings.
      */
-    private ArrayList<UserInfo> anonymizeUsersInList(ArrayList<UserInfo> userInfoList) {
-        ArrayList<UserInfo> anonymizedUserInfoList = new ArrayList<>();
-        userInfoList.forEach(x -> anonymizedUserInfoList.add(anonymizeUser(x)));
-        return anonymizedUserInfoList;
+    private UserInfo removePersonalDataFromUserInfoAccordingToUserSettings(UserInfo userInfo) {
+        // Obtain user settings and create copy of userInfo
+        UserSettings settingsOfUser = DatabaseConnector.obtainUserSettings(userInfo);
+        UserInfo copyUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+                userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), userInfo.getPeerId());
+        // Apply user settings to userInfo
+        if (!settingsOfUser.isLi_enabled()) { // Remove latitude and longitude information if li_enabled is false
+            copyUserInfo.setLatitude(null);
+            copyUserInfo.setLongitude(null);
+        }
+        return copyUserInfo;
     }
+    //endregion
 }
