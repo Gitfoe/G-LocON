@@ -53,9 +53,18 @@ public class SignalingJSONObject {
                 peripheralUser.setPublicIP(obj.getString("publicIP"));
                 peripheralUser.setPublicPort(obj.getInt("publicPort"));
                 peripheralUser.setPrivateIP(obj.getString("privateIP"));
+
+                // Additionl check if the JSONObject contains values for latitude and longtitude (might be disabled by userSettings)
+                if (obj.has("latitude") && obj.has("longitude")) {
+                    peripheralUser.setLatitude(obj.getDouble("latitude"));
+                    peripheralUser.setLongitude(obj.getDouble("longitude"));
+                }
+                else { // Set values to null instead if they are not in the JSONObject
+                    peripheralUser.setLatitude(null);
+                    peripheralUser.setLatitude(null);
+                }
+
                 peripheralUser.setPrivatePort(obj.getInt("privatePort"));
-                peripheralUser.setLatitude(obj.getDouble("latitude"));
-                peripheralUser.setLongitude(obj.getDouble("longitude"));
                 peripheralUser.setPeerId(obj.getString("peerID"));
                 //peripheralUser.setSpeed(obj.getDouble("speed"));
                 peripheralUsers.add(peripheralUser);

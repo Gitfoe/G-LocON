@@ -28,7 +28,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="edit peerId"
+        android:gravity="center"
+        android:hint="Enter peer ID"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/mapFragment"
@@ -113,6 +114,21 @@
         android:layout_height="wrap_content"
         android:text="LI"
         tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="3dp" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/amount_of_peer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount of peers: 0"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

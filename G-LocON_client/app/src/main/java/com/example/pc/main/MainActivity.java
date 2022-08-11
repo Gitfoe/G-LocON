@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pc.P2P.IP2P;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button minus;
     private Button angle;
     private Switch li_switch;
+    private TextView amount_of_peer;
     private GoogleMap mMap;
     private Location mLocation; // Current location
     private float nowCameraAngle = 0; // Current camera angle
@@ -90,20 +92,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         minus = (Button)findViewById(R.id.minus);
         angle = (Button)findViewById(R.id.angle);
         li_switch = (Switch)findViewById(R.id.li_switch);
+        amount_of_peer = (TextView)findViewById(R.id.amount_of_peer);
+        peerId = (EditText)findViewById(R.id.peerId);
+        start = (Button)findViewById(R.id.start);
+
         end.setOnClickListener(this);
-        end.setVisibility(View.INVISIBLE);
-        li_switch.setVisibility(View.INVISIBLE);
-        peerId = (EditText) findViewById(R.id.peerId);
-        start = (Button) findViewById(R.id.start);
         start.setOnClickListener(this);
 
+        end.setVisibility(View.INVISIBLE);
+        li_switch.setVisibility(View.INVISIBLE);
 
         createDatagramSocket();
         utilCommon = (UtilCommon) getApplication();
         myUserInfo = new UserInfo();
         // markerList = new CopyOnWriteArrayList<>();
         markerList = new ArrayList<>();
-
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragment);
@@ -379,6 +382,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param peripheralUserInfos Current number of users in the vicinity
      */
     synchronized public void arrangeMarker(final UserInfo userInfo, final ArrayList<UserInfo> peripheralUserInfos) {
+        // Update the amount of peers counter in the UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                amount_of_peer.setText("Amount of peers: " + peripheralUserInfos.size());
+            }
+        });
+
         //region Marker removal
         if (userInfo == null) {
             Log.d("Main_arrangeMarker", "Number of markers when the function to delete markers is called:" + markerList.size());
@@ -406,9 +417,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //region Perform marker deletion
             runOnUiThread(new Runnable() {
+                @Override
                 public void run() {
-                    Log.d("Main_arrangeMarker", "Number of markers immediately before the marker is deleted: 1" + markerList.size());
-                    Log.d("Main_arrangeMarker", "Number of markers to be deleted: 1" + removeMarker.size());
+                    Log.d("Main_arrangeMarker", "Number of markers immediately before the marker is deleted: " + markerList.size());
+                    Log.d("Main_arrangeMarker", "Number of markers to be deleted: " + removeMarker.size());
                     if (peripheralUserInfos.size() == 0) {
                         for (int i = 0; i < markerList.size(); i++) {
                             markerList.get(i).getMarker().remove();
@@ -439,6 +451,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     markerList.get(i).getPrivateIP().equals(userInfo.getPrivateIP()) && markerList.get(i).getPrivatePort() == (userInfo.getPrivatePort())) { // Boil out
                 if (userInfo.getSpeed() - myUserInfo.getSpeed() > TOLERANCE_SPEED) {
                     runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             markerList.get(tmp).getMarker().setPosition(new LatLng(userInfo.getLatitude(), userInfo.getLongitude()));
                             markerList.get(tmp).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
@@ -446,6 +459,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
                 } else {
                     runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             markerList.get(tmp).getMarker().setPosition(new LatLng(userInfo.getLatitude(), userInfo.getLongitude()));
                             System.out.println("Latitude"+userInfo.getLatitude()+"Longitude"+userInfo.getLongitude());
@@ -463,6 +477,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //region Execute marker creation
         addMarker = ADD_MARKER_PROGRESS;
         runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 Marker setMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(userInfo.getLatitude(), userInfo.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                 markerList.add(new MarkerInfo(setMarker, userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(), userInfo.getPrivatePort()));
