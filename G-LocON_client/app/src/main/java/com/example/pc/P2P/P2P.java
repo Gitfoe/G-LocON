@@ -126,9 +126,11 @@ public class P2P implements IP2PReceiver {
     }
 
     public void sendLocation(int locationUpdateCount) {
+        UserInfo privacyMyUserInfo = removePersonalDataFromOwnUserInfoAccordingToUserSettings(); // Apply the security settings before sending via P2P
+        privacyMyUserInfo = anonymizeUser(privacyMyUserInfo); // Anonymize the user before sending via P2P
+        
         EP2PProcess eP2PProcess = EP2PProcess.SendLocation;
-        UserInfo anonymizedMyUserInfo = anonymizeUser(myUserInfo); // Send the user info anonymously via P2P
-        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, anonymizedMyUserInfo, peripheralUsers, eP2PProcess);
+        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, privacyMyUserInfo, peripheralUsers, eP2PProcess);
         MemoryToCSV_Send(locationUpdateCount);
         p2pSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -139,13 +141,30 @@ public class P2P implements IP2PReceiver {
      * @returns A copy of the user with an anonymized peer ID.
      */
     private UserInfo anonymizeUser(UserInfo userInfo) {
+        // Generate random string of 40 characters to be used as a peer ID
         SecureRandom randomGenerator = new SecureRandom();
         byte[] randomBytes = new byte[20];
         randomGenerator.nextBytes(randomBytes);
         String randomString = new BigInteger(1, randomBytes).toString(16);
-        UserInfo anonymizedUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+        // Create copy of userInfo with anonymized peerID
+        return new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
                 userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString, userInfo.getSpeed());
-        return anonymizedUserInfo;
+    }
+
+    /**
+     * Removes certain personal data from myUserInfo according to the settings.
+     * @return A copy of myUserInfo with configured settings.
+     */
+    private UserInfo removePersonalDataFromOwnUserInfoAccordingToUserSettings() {
+        // Create copy of userInfo
+        UserInfo copyUserInfo = new UserInfo(myUserInfo.getPublicIP(), myUserInfo.getPublicPort(), myUserInfo.getPrivateIP(),
+                myUserInfo.getPrivatePort(), myUserInfo.getLatitude(), myUserInfo.getLongitude(), myUserInfo.getPeerId(), myUserInfo.getSpeed());
+        // Apply user settings to userInfo
+        if (!myUserSettings.isLi_enabled()) { // Remove latitude and longitude information if li_enabled is false
+            copyUserInfo.setLatitude(null);
+            copyUserInfo.setLongitude(null);
+        }
+        return copyUserInfo;
     }
 
     /*

@@ -139,9 +139,8 @@ public class SignalingServerSend extends Thread {
         randomGenerator.nextBytes(randomBytes);
         String randomString = new BigInteger(1, randomBytes).toString(16);
         // Create copy of userInfo with anonymized peerID
-        UserInfo anonymizedUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+        return new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
                 userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString);
-        return anonymizedUserInfo;
     }
 
     /**
