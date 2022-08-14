@@ -122,7 +122,7 @@ public class SignalingServerSend extends Thread {
      */
     private UserInfo applyPrivacyMeasuresToUserInfo(UserInfo userInfo) {
         UserInfo copyUserInfo = userInfo;
-        copyUserInfo = removePersonalDataFromUserInfoAccordingToUserSettings(userInfo);
+        copyUserInfo = removePersonalDataFromUserInfoAccordingToUserSettings(userInfo, true);
         copyUserInfo = anonymizeUser(copyUserInfo);
         return copyUserInfo;
     }
@@ -146,15 +146,18 @@ public class SignalingServerSend extends Thread {
     /**
      * Removes certain personal data from UserInfo according to the settings of that user.
      * @param userInfo The user that has its settings to be configured for.
+     * @param li_enabled_override Override for forcing li_enabled to off, which means the location information is never sent,
+     *                            even if the user has it enabled. This setting was implemented for compliance
+     *                            with the "data minimalization" principle of the GDPR.
      * @return A copy of the userInfo with configured settings.
      */
-    private UserInfo removePersonalDataFromUserInfoAccordingToUserSettings(UserInfo userInfo) {
+    private UserInfo removePersonalDataFromUserInfoAccordingToUserSettings(UserInfo userInfo, boolean li_enabled_override) {
         // Obtain user settings and create copy of userInfo
         UserSettings settingsOfUser = DatabaseConnector.obtainUserSettings(userInfo);
         UserInfo copyUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
                 userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), userInfo.getPeerId());
         // Apply user settings to userInfo
-        if (!settingsOfUser.isLi_enabled()) { // Remove latitude and longitude information if li_enabled is false
+        if (!settingsOfUser.isLi_enabled() || li_enabled_override) { // Remove latitude and longitude information if li_enabled is false, or overridden
             copyUserInfo.setLatitude(null);
             copyUserInfo.setLongitude(null);
         }

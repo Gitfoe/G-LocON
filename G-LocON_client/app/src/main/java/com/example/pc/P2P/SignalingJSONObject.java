@@ -54,7 +54,7 @@ public class SignalingJSONObject {
                 peripheralUser.setPublicPort(obj.getInt("publicPort"));
                 peripheralUser.setPrivateIP(obj.getString("privateIP"));
 
-                // Additionl check if the JSONObject contains values for latitude and longtitude (might be disabled by userSettings)
+                // Additional check if the JSONObject contains values for latitude and longitude (might be disabled by userSettings)
                 if (obj.has("latitude") && obj.has("longitude")) {
                     peripheralUser.setLatitude(obj.getDouble("latitude"));
                     peripheralUser.setLongitude(obj.getDouble("longitude"));
