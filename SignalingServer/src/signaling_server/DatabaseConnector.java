@@ -1,6 +1,7 @@
 package signaling_server;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 /**
  * Responsible for interacting with the MySQL database.
@@ -113,7 +114,7 @@ public final class DatabaseConnector {
         try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
             // Build the string for inserting
             String insertSql = "UPDATE user_settings " +
-                               "SET li_enabled = '" + userSettingsLiEnabled + "'" +
+                               "SET li_enabled = '" + userSettingsLiEnabled + "', last_updated = '" + LocalDateTime.now() + "' " +
                                "WHERE user_id = '" + userSettings.getPeer_id() + "'";
             // Execute the string on the database
             stmt.executeUpdate(insertSql);
