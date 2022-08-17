@@ -40,11 +40,11 @@
 }</component>
   <component name="RunManager">
     <configuration name="stun_server.StartUp" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="stun_server.StartUp" />
+      <option name="MAIN_CLASS_NAME" value="stun_server.View.StartUp" />
       <module name="STUNServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="stun_server.*" />
+          <option name="PATTERN" value="stun_server.View.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

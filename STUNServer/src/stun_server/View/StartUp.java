@@ -1,4 +1,7 @@
-package stun_server;
+package stun_server.View;
+
+import stun_server.Controller.STUNServer;
+import stun_server.Model.UserInfo;
 
 import java.net.DatagramSocket;
 import java.net.SocketException;
