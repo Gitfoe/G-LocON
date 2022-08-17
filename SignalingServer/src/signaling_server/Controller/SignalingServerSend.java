@@ -1,4 +1,4 @@
-package signaling_server;
+package signaling_server.Controller;
 
 import java.math.BigInteger;
 import java.net.DatagramPacket;
@@ -8,6 +8,8 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
 
 public class SignalingServerSend extends Thread {
     private DatagramSocket socket; // UDP communication socket

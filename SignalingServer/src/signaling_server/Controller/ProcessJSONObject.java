@@ -1,8 +1,10 @@
-package signaling_server;
+package signaling_server.Controller;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
 
 import java.util.ArrayList;
 

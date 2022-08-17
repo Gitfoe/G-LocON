@@ -1,4 +1,4 @@
-package signaling_server;
+package signaling_server.Model;
 
 /**
  * Saves all the settings the user might have configured for his profile.

@@ -1,11 +1,10 @@
-package signaling_server;
+package signaling_server.View;
 
-import java.math.BigInteger;
+import signaling_server.Model.UserInfo;
+import signaling_server.Controller.SignalingServerReceive;
+
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class StartUp {

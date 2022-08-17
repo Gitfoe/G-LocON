@@ -1,12 +1,14 @@
-package signaling_server;
+package signaling_server.Controller;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
 
-import static signaling_server.DatabaseConnector.updateUserSettingsInDatabase;
+import static signaling_server.Controller.DatabaseConnector.updateUserSettingsInDatabase;
 
 public class SignalingServerReceive extends Thread {
 	private DatagramSocket socket;

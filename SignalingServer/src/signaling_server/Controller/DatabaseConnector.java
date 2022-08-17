@@ -1,4 +1,7 @@
-package signaling_server;
+package signaling_server.Controller;
+
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
 
 import java.sql.*;
 import java.time.LocalDateTime;

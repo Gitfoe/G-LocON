@@ -4,8 +4,15 @@
     <list default="true" id="aa401123-f42d-4156-abb9-f60b26c9302e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signaling_server/StartUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/StartUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/HubenyDistance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/HubenyDistance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/ProcessJSONObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/ProcessJSONObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/SignalingServerReceive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerReceive.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/SignalingServerSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/StartUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/View/StartUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Model/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/UserSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Model/UserSettings.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +42,12 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="StartUp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="signaling_server.StartUp" />
+    <configuration name="signaling_server.View.StartUp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="signaling_server.View.StartUp" />
       <module name="SignalingServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="signaling_server.*" />
+          <option name="PATTERN" value="signaling_server.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -50,7 +57,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartUp" />
+        <item itemvalue="Application.signaling_server.View.StartUp" />
       </list>
     </recent_temporary>
   </component>
@@ -64,5 +71,16 @@
       <updated>1660190526298</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
