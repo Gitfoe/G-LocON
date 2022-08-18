@@ -60,7 +60,7 @@ public class P2PReceiver extends AsyncTask<String, String, Void> {
                     iP2PReceiver.onDoUDPHolePunching(signalingJSONObject.getSrcUser());
                 }
 
-                else if (processType.equals((GET_SRC_USER_SETTINGS))) {
+                else if (processType.equals(GET_SRC_USER_SETTINGS)) {
                     System.out.println("processType-----GET_SRC_USER_SETTINGS");
                     iP2PReceiver.onGetSrcUserSettings(signalingJSONObject.getSrcUserSettings());
                 }
