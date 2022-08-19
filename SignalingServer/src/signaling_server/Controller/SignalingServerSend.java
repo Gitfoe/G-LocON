@@ -134,7 +134,7 @@ public class SignalingServerSend extends Thread {
      * @param userInfo The user that needs their peer ID anonymized.
      * @returns A copy of the user with an anonymized peer ID.
      */
-    private UserInfo anonymizeUser(UserInfo userInfo) {
+    public UserInfo anonymizeUser(UserInfo userInfo) {
         // Generate random string of 40 characters to be used as a peer ID
         SecureRandom randomGenerator = new SecureRandom();
         byte[] randomBytes = new byte[20];
@@ -153,7 +153,7 @@ public class SignalingServerSend extends Thread {
      *                            with the "data minimalization" principle of the GDPR.
      * @return A copy of the userInfo with configured settings.
      */
-    private UserInfo removePersonalDataFromUserInfoAccordingToUserSettings(UserInfo userInfo, boolean li_enabled_override) {
+    public UserInfo removePersonalDataFromUserInfoAccordingToUserSettings(UserInfo userInfo, boolean li_enabled_override) {
         // Obtain user settings and create copy of userInfo
         UserSettings settingsOfUser = DatabaseConnector.obtainUserSettings(userInfo);
         UserInfo copyUserInfo = new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),

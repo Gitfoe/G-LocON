@@ -2,12 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa401123-f42d-4156-abb9-f60b26c9302e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnectorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSendTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSend.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -23,15 +35,31 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
     "last_opened_file_path": "C:/Users/wafoe/Documents/GitHub Projects/G-LocON/STUNServer",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="signaling_server.Controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.signaling_server.Controller in SignalingServer">
     <configuration name="signaling_server.View.StartUp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="signaling_server.View.StartUp" />
       <module name="SignalingServer" />
@@ -45,8 +73,55 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DatabaseConnectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="MAIN_CLASS_NAME" value="signaling_server.Controller.DatabaseConnectorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SignalingServerSendTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="MAIN_CLASS_NAME" value="signaling_server.Controller.SignalingServerSendTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="signaling_server.Controller in SignalingServer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.signaling_server.Controller in SignalingServer" />
+        <item itemvalue="JUnit.SignalingServerSendTest" />
+        <item itemvalue="JUnit.DatabaseConnectorTest" />
         <item itemvalue="Application.signaling_server.View.StartUp" />
       </list>
     </recent_temporary>
@@ -72,5 +147,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SignalingServer$signaling_server_Controller_in_SignalingServer.ic" NAME="signaling_server.Controller in SignalingServer Coverage Results" MODIFIED="1660838489097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>signaling_server.Controller.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -22,8 +22,9 @@ public final class DatabaseConnector {
     /**
      * Inserts new UserInfo into the database.
      * @param userInfo The UserInfo that needs to be inserted.
+     * @return True if successful and false if not.
      */
-    public static void insertUserInfoInDatabase(UserInfo userInfo) {
+    public static boolean insertUserInfoInDatabase(UserInfo userInfo) {
         // Open a connection
         try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
             // Build the string for inserting
@@ -37,9 +38,11 @@ public final class DatabaseConnector {
                                             userInfo.getLongitude() + "')";
             // Execute the string on the database
             stmt.executeUpdate(insertSql);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Inserting of user info for peer " + userInfo.getPeerId() + " failed");
+            return false;
         }
     }
 
@@ -68,10 +71,10 @@ public final class DatabaseConnector {
                 UserSettings userSettings = new UserSettings(user_id, li_enabled);
 
                 if (userSettings.getPeer_id() == null) {
-                    System.out.println("Peer " + userInfo.getPeerId() + " not in user settings table, returning default values and inserting into the database");
+                    System.out.println("Peer " + userInfo.getPeerId() + " not in user settings table, inserting default values into the database and trying to obtain again");
                     UserSettings defaultUserSettings = new UserSettings(userInfo.getPeerId(), false);
                     insertUserSettingsInDatabase(defaultUserSettings);
-                    return defaultUserSettings;
+                    counter++;
                 }
                 else {
                     System.out.println("User settings for peer " + userInfo.getPeerId() + " successfully obtained");
@@ -89,8 +92,9 @@ public final class DatabaseConnector {
     /**
      * Inserts new UserSettings into the database.
      * @param userSettings The UserSettings that needs to be inserted.
+     * @return True if successful or false if not.
      */
-    private static void insertUserSettingsInDatabase(UserSettings userSettings) {
+    private static boolean insertUserSettingsInDatabase(UserSettings userSettings) {
         int userSettingsLiEnabled = userSettings.isLi_enabled() ? 1 : 0;
         // Open a connection
         try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
@@ -101,17 +105,20 @@ public final class DatabaseConnector {
             // Execute the string on the database
             stmt.executeUpdate(insertSql);
             System.out.println("User settings for peer " + userSettings.getPeer_id() + " successfully inserted");
+            return true;
         } catch (SQLException e) {
             System.out.println("Inserting of user settings for peer " + userSettings.getPeer_id() + " failed");
             e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * Updates the UserSettings of a user in the database.
      * @param userSettings The UserSettings that needs to be updated.
+     * @return True if successful and false if not.
      */
-    public static void updateUserSettingsInDatabase(UserSettings userSettings) {
+    public static boolean updateUserSettingsInDatabase(UserSettings userSettings) {
         int userSettingsLiEnabled = userSettings.isLi_enabled() ? 1 : 0;
         // Open a connection
         try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
@@ -122,9 +129,30 @@ public final class DatabaseConnector {
             // Execute the string on the database
             stmt.executeUpdate(insertSql);
             System.out.println("User settings for peer " + userSettings.getPeer_id() + " successfully updated");
+            return true;
         } catch (SQLException e) {
             System.out.println("Updating of user settings for peer " + userSettings.getPeer_id() + " failed");
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Deletes userSettings from the users table in the database.
+     * @param userID The userSettings that needs to be deleted.
+     * @return True if successful and false if not.
+     */
+    public static boolean deleteUserSettingsFromDatabase(String userID) {
+        // Open a connection
+        try(Connection conn = DriverManager.getConnection(databaseConnectionUrl, databaseUserName, databasePassword); Statement stmt = conn.createStatement()) {
+            // Build the string for inserting
+            String insertSql = "DELETE FROM user_settings WHERE user_id = '" + userID + "'";
+            // Execute the string on the database
+            stmt.executeUpdate(insertSql);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
