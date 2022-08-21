@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="SignalingServer:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="aa401123-f42d-4156-abb9-f60b26c9302e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnectorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSendTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signaling_server/Controller/SignalingServerSend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/artifacts/SignalingServer_jar/SignalingServer.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/artifacts/SignalingServer_jar/Start SignalingServer.bat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,9 +123,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.signaling_server.Controller in SignalingServer" />
+        <item itemvalue="Application.signaling_server.View.StartUp" />
         <item itemvalue="JUnit.SignalingServerSendTest" />
         <item itemvalue="JUnit.DatabaseConnectorTest" />
-        <item itemvalue="Application.signaling_server.View.StartUp" />
       </list>
     </recent_temporary>
   </component>
@@ -149,7 +152,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SignalingServer$signaling_server_Controller_in_SignalingServer.ic" NAME="signaling_server.Controller in SignalingServer Coverage Results" MODIFIED="1660838489097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/SignalingServer$signaling_server_Controller_in_SignalingServer.ic" NAME="signaling_server.Controller in SignalingServer Coverage Results" MODIFIED="1660886899781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>signaling_server.Controller.*</FILTER>
     </SUITE>
   </component>
