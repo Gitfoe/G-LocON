@@ -1,4 +1,4 @@
-package stun_server;
+package stun_server.Model;
 
 import java.net.InetAddress;
 

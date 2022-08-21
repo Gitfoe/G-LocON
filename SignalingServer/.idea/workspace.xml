@@ -6,20 +6,23 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10759fbd-b789-499a-9d69-33b75d662daf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2P.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/P2PReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/P2P/SignalingJSONObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/STUNServerClient/STUNServerClientSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../G-LocON_client/app/src/main/java/com/example/pc/main/MainActivity.java" afterDir="false" />
+    <list default="true" id="aa401123-f42d-4156-abb9-f60b26c9302e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../STUNServer/classes/artifacts/STUNServer_jar/STUNServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../STUNServer/classes/artifacts/STUNServer_jar/STUNServer.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/artifacts/SignalingServer_jar/SignalingServer.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/artifacts/SignalingServer_jar/Start SignalingServer.bat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -27,7 +30,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="29ENs38fwRHNPNEhcg1yQOXzv7D" />
+  <component name="ProjectId" id="2DC61OnzejtzmYYnmBNDDH00zta" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,21 +38,37 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/wafoe/Documents/GitHub Projects/G-LocON/SignalingServer",
-    "project.structure.last.edited": "Artifacts",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
+    "last_opened_file_path": "C:/Users/wafoe/Documents/GitHub Projects/G-LocON/STUNServer",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="signaling_server.StartUp" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="signaling_server.StartUp" />
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="signaling_server.Controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.signaling_server.Controller in SignalingServer">
+    <configuration name="signaling_server.View.StartUp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="signaling_server.View.StartUp" />
       <module name="SignalingServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="signaling_server.*" />
+          <option name="PATTERN" value="signaling_server.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -57,31 +76,67 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
+    <configuration name="DatabaseConnectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="MAIN_CLASS_NAME" value="signaling_server.Controller.DatabaseConnectorTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
+    <configuration name="SignalingServerSendTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="MAIN_CLASS_NAME" value="signaling_server.Controller.SignalingServerSendTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="signaling_server.Controller in SignalingServer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SignalingServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signaling_server.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="signaling_server.Controller" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.signaling_server.StartUp" />
+        <item itemvalue="JUnit.signaling_server.Controller in SignalingServer" />
+        <item itemvalue="Application.signaling_server.View.StartUp" />
+        <item itemvalue="JUnit.SignalingServerSendTest" />
+        <item itemvalue="JUnit.DatabaseConnectorTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="10759fbd-b789-499a-9d69-33b75d662daf" name="Changes" comment="" />
-      <created>1652674487706</created>
+      <changelist id="aa401123-f42d-4156-abb9-f60b26c9302e" name="Changes" comment="" />
+      <created>1660190526298</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1652674487706</updated>
+      <updated>1660190526298</updated>
     </task>
     <servers />
   </component>
@@ -90,22 +145,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/reverse-engineering" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SignalingServer$signaling_server_Controller_in_SignalingServer.ic" NAME="signaling_server.Controller in SignalingServer Coverage Results" MODIFIED="1660886899781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>signaling_server.Controller.*</FILTER>
+    </SUITE>
   </component>
 </project>

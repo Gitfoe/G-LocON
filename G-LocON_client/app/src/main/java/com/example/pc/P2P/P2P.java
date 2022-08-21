@@ -3,15 +3,19 @@ package com.example.pc.P2P;
 import android.location.Location;
 import android.os.AsyncTask;
 
+import com.example.pc.main.IThrowListener;
 import com.example.pc.main.MemoryResult;
 import com.example.pc.main.MemoryToReceiveData;
 import com.example.pc.main.MemoryToSendData;
 import com.example.pc.main.OutputToCSV;
 import com.example.pc.main.SetDate;
 import com.example.pc.main.UserInfo;
+import com.example.pc.main.UserSettings;
 import com.example.pc.main.UtilCommon;
 
+import java.math.BigInteger;
 import java.net.DatagramSocket;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +28,13 @@ public class P2P implements IP2PReceiver {
     private IP2P iP2P;
     private DatagramSocket socket;
     private UserInfo myUserInfo;
-    private ArrayList<UserInfo> peripheralUsers; // Perhiperal user information
+    private UserSettings myUserSettings;
+    private ArrayList<UserInfo> peripheralUsers; // Peripheral user information
     private OutputToCSV sendFileInput; // Write send data to CSV
     private OutputToCSV receiveFileInput; // Write receive data to CSV
     private List<MemoryToSendData> sendMemory; // Record send data
     private List<MemoryToReceiveData> receiveMemory; // Record receive data
+    private List<IThrowListener> listeners = new ArrayList<IThrowListener>(); // For the updating of user settings
 
     /**
      * Default constructor
@@ -38,9 +44,16 @@ public class P2P implements IP2PReceiver {
         this.iP2P = iP2P;
         this.socket = socket;
         this.myUserInfo = myUserInfo;
-        peripheralUsers = new ArrayList<>();
-
+        this.peripheralUsers = new ArrayList<>();
         setUpMemory();
+    }
+
+    /**
+     * To add someone to the list of catchers for an event.
+     * @param toAdd The catcher.
+     */
+    public void addThrowListener(IThrowListener toAdd){
+        listeners.add(toAdd);
     }
 
     public ArrayList<UserInfo> getPeripheralUsers(){
@@ -61,7 +74,6 @@ public class P2P implements IP2PReceiver {
         P2PReceiver p2pReceiver = new P2PReceiver(socket, this);
         p2pReceiver.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
 
     //region Connection system to SignalingServer
     public void signalingRegister() {
@@ -91,6 +103,13 @@ public class P2P implements IP2PReceiver {
         Signaling signaling = new Signaling(socket, myUserInfo, eSignalingProcess);
         signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
+
+    public void signalingSettings(UserSettings userSettings) {
+        ESignalingProcess eSignalingProcess;
+        eSignalingProcess = ESignalingProcess.SETTINGS;
+        Signaling signaling = new Signaling(socket, userSettings, eSignalingProcess);
+        signaling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
     //endregion
 
     //region P2P sender system
@@ -107,10 +126,45 @@ public class P2P implements IP2PReceiver {
     }
 
     public void sendLocation(int locationUpdateCount) {
+        UserInfo privacyMyUserInfo = removePersonalDataFromOwnUserInfoAccordingToUserSettings(); // Apply the security settings before sending via P2P
+        privacyMyUserInfo = anonymizeUser(privacyMyUserInfo); // Anonymize the user before sending via P2P
+        
         EP2PProcess eP2PProcess = EP2PProcess.SendLocation;
-        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, myUserInfo, peripheralUsers, eP2PProcess);
+        P2PSender p2pSender = new P2PSender(socket, locationUpdateCount, privacyMyUserInfo, peripheralUsers, eP2PProcess);
         MemoryToCSV_Send(locationUpdateCount);
         p2pSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    /**
+     * Anonymizes the peer ID parameter of a single user.
+     * @param userInfo The user that needs their peer ID anonymized.
+     * @returns A copy of the user with an anonymized peer ID.
+     */
+    private UserInfo anonymizeUser(UserInfo userInfo) {
+        // Generate random string of 40 characters to be used as a peer ID
+        SecureRandom randomGenerator = new SecureRandom();
+        byte[] randomBytes = new byte[20];
+        randomGenerator.nextBytes(randomBytes);
+        String randomString = new BigInteger(1, randomBytes).toString(16);
+        // Create copy of userInfo with anonymized peerID
+        return new UserInfo(userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(),
+                userInfo.getPrivatePort(), userInfo.getLatitude(), userInfo.getLongitude(), randomString, userInfo.getSpeed());
+    }
+
+    /**
+     * Removes certain personal data from myUserInfo according to the settings.
+     * @return A copy of myUserInfo with configured settings.
+     */
+    private UserInfo removePersonalDataFromOwnUserInfoAccordingToUserSettings() {
+        // Create copy of userInfo
+        UserInfo copyUserInfo = new UserInfo(myUserInfo.getPublicIP(), myUserInfo.getPublicPort(), myUserInfo.getPrivateIP(),
+                myUserInfo.getPrivatePort(), myUserInfo.getLatitude(), myUserInfo.getLongitude(), myUserInfo.getPeerId(), myUserInfo.getSpeed());
+        // Apply user settings to userInfo
+        if (!myUserSettings.isLi_enabled()) { // Remove latitude and longitude information if li_enabled is false
+            copyUserInfo.setLatitude(null);
+            copyUserInfo.setLongitude(null);
+        }
+        return copyUserInfo;
     }
 
     /*
@@ -180,6 +234,18 @@ public class P2P implements IP2PReceiver {
                 iP2P.onGetDetailUserInfo(peripheralUsers.get(i), peripheralUsers);
                 return;
             }
+        }
+    }
+
+    /**
+     * Sets the received user settings from the server
+     * @param userSettings
+     */
+    @Override
+    public void onGetSrcUserSettings(UserSettings userSettings) {
+        myUserSettings = userSettings;
+        for (IThrowListener hl : listeners) {
+            hl.Catch(userSettings);
         }
     }
 

@@ -1,4 +1,6 @@
-package stun_server;
+package stun_server.Controller;
+
+import stun_server.Model.UserInfo;
 
 import java.net.DatagramSocket;
 
