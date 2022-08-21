@@ -1,10 +1,14 @@
-package signaling_server;
+package signaling_server.Controller;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
+
+import static signaling_server.Controller.DatabaseConnector.updateUserSettingsInDatabase;
 
 public class SignalingServerReceive extends Thread {
 	private DatagramSocket socket;
@@ -26,6 +30,7 @@ public class SignalingServerReceive extends Thread {
 		final String UPDATE = "UPDATE";
 		final String SEARCH = "SEARCH";
 		final String DELETE = "DELETE";
+		final String SETTINGS = "SETTINGS";
 
 		while (true) {
 			// Receive data
@@ -41,24 +46,24 @@ public class SignalingServerReceive extends Thread {
 
 				if (processType.equals(REGISTER)) { // Registration
 					onRegister(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Register terminal information for");
+					System.out.println("Register terminal information for peer" + processJSONObject.getUserInfo().getPeerId());
 					showInfo(processJSONObject.getUserInfo(), REGISTER);
 				} else if (processType.equals(UPDATE)) { // Update
 					onUpdate(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Update terminal information for");
+					System.out.println( "Update terminal information for peer " + processJSONObject.getUserInfo().getPeerId());
 					showInfo(processJSONObject.getUserInfo(), UPDATE);
-
 				} else if (processType.equals(SEARCH)) { // Searching for
 					onSearch(processJSONObject.getUserInfo(), processJSONObject.getSearchDistance());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Execute search request from");
-
+					System.out.println("Execute search request from peer " + processJSONObject.getUserInfo().getPeerId());
 				} else if (processType.equals(DELETE)) { // Deletion
 					onDelete(processJSONObject.getUserInfo());
-					System.out.println(processJSONObject.getUserInfo().getPeerId() + "Delete terminal information for");
-
+					System.out.println("Delete terminal information for peer " + processJSONObject.getUserInfo().getPeerId());
+				} else if (processType.equals(SETTINGS)) { // Updating user settings
+					onSettings(processJSONObject.getUserSettings());
+					System.out.println("Settings update terminal information for peer " + processJSONObject.getUserSettings().getPeer_id());
 				}
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 		}
 	}
@@ -70,8 +75,15 @@ public class SignalingServerReceive extends Thread {
 	 */
 	public void onRegister(UserInfo userInfo) {
 		userInfoList.add(userInfo);
-		System.out.println("REGISTER: Size of current userInfos" + userInfoList.size());
+		DatabaseConnector.insertUserInfoInDatabase(userInfo);
+		System.out.println("REGISTER: Size of current userInfos: " + userInfoList.size());
 		//System.out.println(userInfo);
+
+		// After registering the user, we need to send their settings back to them to configure the correct settings within the application.
+		SignalingServerSend settings = new SignalingServerSend(socket, userInfo, null, "sendUserSettings");
+		settings.start();
+		System.out.println("");
+		System.out.println("sendUserSettings for " + userInfo.getPeerId() + " started.");
 	}
 
 	/**
@@ -94,6 +106,7 @@ public class SignalingServerReceive extends Thread {
 			if (userInfo.getPublicIP().equals(userInfo.getPublicIP()) && userInfoList.get(i).getPublicPort() == userInfo.getPublicPort() &&
 					userInfoList.get(i).getPrivateIP().equals(userInfo.getPrivateIP()) && userInfoList.get(i).getPrivatePort() == userInfo.getPrivatePort()) {
 				userInfoList.set(i, userInfo);
+				DatabaseConnector.insertUserInfoInDatabase(userInfo);
 				break;
 			}
 		}
@@ -145,10 +158,10 @@ public class SignalingServerReceive extends Thread {
 		SignalingServerSend UDPHolePunchingOtherUsers = new SignalingServerSend(socket, userInfo, searchResultUserList, "srcAddrPortRegisterToNat");
 		UDPHolePunchingOtherUsers.start();
 		System.out.println("");
-		System.out.println(userInfo.getPeerId() + "srcAddrPortRegisterToNat started");
+		System.out.println("srcAddrPortRegisterToNat for " + userInfo.getPeerId() + " started.");
 		SignalingServerSend reply = new SignalingServerSend(socket, userInfo, searchResultUserList, "replyFromMainActivity");
 		reply.start();
-		System.out.println(userInfo.getPeerId() + "replyFromMainActivity started");
+		System.out.println("replyFromMainActivity for " + userInfo.getPeerId() + " started.");
 		System.out.println("");
 	}
 
@@ -172,6 +185,10 @@ public class SignalingServerReceive extends Thread {
 				break;
 			}
 		}
+	}
+
+	public void onSettings(UserSettings userSettings) {
+		updateUserSettingsInDatabase(userSettings);
 	}
 
 	/**

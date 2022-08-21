@@ -4,10 +4,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pc.P2P.IP2P;
@@ -42,13 +46,15 @@ import java.util.List;
 /**
  * Basic form of V2V
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener, OnMapReadyCallback, ISTUNServerClient, IP2P {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener, OnMapReadyCallback, ISTUNServerClient, IP2P, IThrowListener{
     private EditText peerId;
     private Button start;
     private Button end;
     private Button plus;
     private Button minus;
     private Button angle;
+    private Switch li_switch;
+    private TextView amount_of_peer;
     private GoogleMap mMap;
     private Location mLocation; // Current location
     private float nowCameraAngle = 0; // Current camera angle
@@ -63,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     UtilCommon utilCommon; // Common data such as global IP of the server
     UserInfo myUserInfo; // Own information
+    UserSettings myUserSettings; // Own settings
     private DatagramSocket socket;
     final static int NAT_TRAVEL_OK = 1; // OK if you have already obtained your own NAT converted information
     private int natTravel = 0; // Support for NAT_TRAVEL_OK
@@ -80,16 +87,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        end = (Button) findViewById(R.id.end);
+        end = (Button)findViewById(R.id.end);
         plus = (Button)findViewById(R.id.plus);
         minus = (Button)findViewById(R.id.minus);
         angle = (Button)findViewById(R.id.angle);
+        li_switch = (Switch)findViewById(R.id.li_switch);
+        amount_of_peer = (TextView)findViewById(R.id.amount_of_peer);
+        peerId = (EditText)findViewById(R.id.peerId);
+        start = (Button)findViewById(R.id.start);
+
         end.setOnClickListener(this);
-        end.setVisibility(View.INVISIBLE);
-        peerId = (EditText) findViewById(R.id.peerId);
-        start = (Button) findViewById(R.id.start);
         start.setOnClickListener(this);
 
+        end.setVisibility(View.INVISIBLE);
+        li_switch.setVisibility(View.INVISIBLE);
 
         createDatagramSocket();
         utilCommon = (UtilCommon) getApplication();
@@ -97,13 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // markerList = new CopyOnWriteArrayList<>();
         markerList = new ArrayList<>();
 
-
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragment);
 
         mapFragment.getMapAsync(this);
     }
-
 
     /**
      * Socket Generation Methods
@@ -126,18 +135,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (R.id.start == v.getId()) {
-            utilCommon.setSignalingServerIP("160.16.84.67"); // Server IP address
+            utilCommon.setSignalingServerIP("192.168.0.144"); // Server IP address
             utilCommon.setSignalingServerPort(55555); // Server port number
-            utilCommon.setStunServerIP("160.16.84.67");  // Server IP address
+            utilCommon.setStunServerIP("192.168.0.144");  // Server IP address
             utilCommon.setStunServerPort(55554); // Server port number
             utilCommon.setPeerId(peerId.getText().toString());
             peerId.setVisibility(View.INVISIBLE);
             start.setVisibility(View.INVISIBLE);
             end.setVisibility(View.VISIBLE);
+            li_switch.setVisibility(View.VISIBLE);
 
             plus.setOnClickListener(this);
             minus.setOnClickListener(this);
             angle.setOnClickListener(this);
+            li_switch.setOnClickListener(this);
 
             mLocation = new Location("");
             //mLocation.setLatitude(35.951003); // In front of the university
@@ -175,6 +186,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 angle.setText("HEADUP");
             }
         }
+
+        else if (R.id.li_switch == v.getId()) {
+            myUserSettings.setLi_enabled(li_switch.isChecked());
+            p2p.signalingSettings(myUserSettings);
+        }
     }
 
     /**
@@ -197,13 +213,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myUserInfo.setLongitude(139.588568);
 
         p2p = new P2P(socket, myUserInfo, this);
+        p2p.addThrowListener(this); // Subscribe to the retrieval of user settings event
+
         natTravel = NAT_TRAVEL_OK;
         p2p.p2pReceiverStart();
         p2p.signalingRegister();
+
         MyLocation myLocation = new MyLocation(this, this, 1);
         myLocation.createGoogleApiClient();
     }
-
 
     /**
      * Event listener called when map is available
@@ -222,17 +240,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                String tapPeerId = null;
+                String tapPeerPublicIP = null;
+                Integer tapPeerPublicPort = null;
+                String tapPeerPrivateIP = null;
+                Integer tapPeerPrivatePort = null;
                 UserInfo tapPeer = null;
                 for(int i = 0; i < markerList.size(); i++){
                     if(marker.equals(markerList.get(i).getMarker())){
-                        tapPeerId = markerList.get(i).getPeerId();
+                        tapPeerPublicIP = markerList.get(i).getPublicIP();
+                        tapPeerPublicPort = markerList.get(i).getPublicPort();
+                        tapPeerPublicIP = markerList.get(i).getPrivateIP();
+                        tapPeerPublicPort = markerList.get(i).getPrivatePort();
                         break;
                     }
                 }
 
                 for(int i = 0; i < p2p.getPeripheralUsers().size(); i++){
-                    if(tapPeerId.equals(p2p.getPeripheralUsers().get(i).getPeerId())){
+                    if(markerList.get(i).getPublicIP().equals(p2p.getPeripheralUsers().get(i).getPublicIP()) &&
+                            markerList.get(i).getPublicPort() == (p2p.getPeripheralUsers().get(i).getPublicPort()) &&
+                            markerList.get(i).getPrivateIP().equals(p2p.getPeripheralUsers().get(i).getPrivateIP()) &&
+                            markerList.get(i).getPrivatePort() == (p2p.getPeripheralUsers().get(i).getPrivatePort())){
                         tapPeer = p2p.getPeripheralUsers().get(i);
                         break;
                     }
@@ -355,6 +382,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param peripheralUserInfos Current number of users in the vicinity
      */
     synchronized public void arrangeMarker(final UserInfo userInfo, final ArrayList<UserInfo> peripheralUserInfos) {
+        // Update the amount of peers counter in the UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                amount_of_peer.setText("Amount of peers: " + peripheralUserInfos.size());
+            }
+        });
+
         //region Marker removal
         if (userInfo == null) {
             Log.d("Main_arrangeMarker", "Number of markers when the function to delete markers is called:" + markerList.size());
@@ -366,7 +401,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < markerList.size(); i++) {
                 int j = 0;
                 for (; j < peripheralUserInfos.size(); j++) {
-                    if (markerList.get(i).getPeerId().equals(peripheralUserInfos.get(j).getPeerId())) {
+                    if (markerList.get(i).getPublicIP().equals(peripheralUserInfos.get(j).getPublicIP()) &&
+                            markerList.get(i).getPublicPort() == (peripheralUserInfos.get(j).getPublicPort()) &&
+                            markerList.get(i).getPrivateIP().equals(peripheralUserInfos.get(j).getPrivateIP()) &&
+                            markerList.get(i).getPrivatePort() == (peripheralUserInfos.get(j).getPrivatePort())) {
                         continueMarker.add(markerList.get(i));
                         break;
                     }
@@ -379,9 +417,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //region Perform marker deletion
             runOnUiThread(new Runnable() {
+                @Override
                 public void run() {
-                    Log.d("Main_arrangeMarker", "Number of markers immediately before the marker is deleted: 1" + markerList.size());
-                    Log.d("Main_arrangeMarker", "Number of markers to be deleted: 1" + removeMarker.size());
+                    Log.d("Main_arrangeMarker", "Number of markers immediately before the marker is deleted: " + markerList.size());
+                    Log.d("Main_arrangeMarker", "Number of markers to be deleted: " + removeMarker.size());
                     if (peripheralUserInfos.size() == 0) {
                         for (int i = 0; i < markerList.size(); i++) {
                             markerList.get(i).getMarker().remove();
@@ -408,9 +447,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //region Perform marker updates
         for (int i = 0; i < markerList.size(); i++) {
             final int tmp = i;
-            if (markerList.get(i).getPeerId().equals(userInfo.getPeerId())) { //ぬるぽでる
+            if (markerList.get(i).getPublicIP().equals(userInfo.getPublicIP()) && markerList.get(i).getPublicPort() == (userInfo.getPublicPort()) &&
+                    markerList.get(i).getPrivateIP().equals(userInfo.getPrivateIP()) && markerList.get(i).getPrivatePort() == (userInfo.getPrivatePort())) { // Boil out
                 if (userInfo.getSpeed() - myUserInfo.getSpeed() > TOLERANCE_SPEED) {
                     runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             markerList.get(tmp).getMarker().setPosition(new LatLng(userInfo.getLatitude(), userInfo.getLongitude()));
                             markerList.get(tmp).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
@@ -418,6 +459,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
                 } else {
                     runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             markerList.get(tmp).getMarker().setPosition(new LatLng(userInfo.getLatitude(), userInfo.getLongitude()));
                             System.out.println("Latitude"+userInfo.getLatitude()+"Longitude"+userInfo.getLongitude());
@@ -435,10 +477,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //region Execute marker creation
         addMarker = ADD_MARKER_PROGRESS;
         runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 Marker setMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(userInfo.getLatitude(), userInfo.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                String setPeerId = userInfo.getPeerId();
-                markerList.add(new MarkerInfo(setMarker, setPeerId));
+                markerList.add(new MarkerInfo(setMarker, userInfo.getPublicIP(), userInfo.getPublicPort(), userInfo.getPrivateIP(), userInfo.getPrivatePort()));
                 addMarker = NOT_ADD_MARKER_PROGRESS;
             }
         });
@@ -459,11 +501,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void displayToast(final String msg) {
-        Handler h = new Handler(getApplication().getMainLooper());
-        h.post(new Runnable() {
+        Handler handler = new Handler(getApplication().getMainLooper());
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(getApplication(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void Catch(UserSettings userSettings) {
+        myUserSettings = userSettings; // Set user settings for later usage in this class
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                li_switch.setChecked(userSettings.isLi_enabled());
             }
         });
     }

@@ -1,4 +1,4 @@
-package signaling_server;
+package signaling_server.Model;
 
 public class UserInfo {
 
@@ -6,13 +6,12 @@ public class UserInfo {
 	private int publicPort;
 	private String privateIP;
 	private int privatePort;
-	private double latitude;
-	private double longitude;
+	private Double latitude;
+	private Double longitude;
 	private String peerId;
 	//private double speed;
 
-	public UserInfo() {
-	}
+	public UserInfo() { }
 
 	/*
     public UserInfo(String publicIP,int publicPort,String privateIP,int privatePort,double latitude,double longitude,String peerId){
@@ -26,7 +25,7 @@ public class UserInfo {
      }
      */
 
-	public UserInfo(String publicIP, int publicPort, String privateIP, int privatePort, double latitude, double longitude, String peerId) {
+	public UserInfo(String publicIP, int publicPort, String privateIP, int privatePort, Double latitude, Double longitude, String peerId) {
 		this.publicIP = publicIP;
 		this.publicPort = publicPort;
 		this.privateIP = privateIP;
@@ -96,28 +95,28 @@ public class UserInfo {
 	/**
 	 * @return latitude
 	 */
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
 	/**
 	 * @param latitude Set latitude
 	 */
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
 	/**
 	 * @return longitude
 	 */
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
 	/**
 	 * @param longitude Set longitude
 	 */
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 

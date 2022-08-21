@@ -1,4 +1,4 @@
-package signaling_server;
+package signaling_server.Controller;
 
 /*
  * Created by MF17037 on 2018/08/04.

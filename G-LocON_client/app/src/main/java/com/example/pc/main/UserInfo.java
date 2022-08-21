@@ -9,13 +9,22 @@ public class UserInfo {
     private int publicPort;
     private String privateIP;
     private int privatePort;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
     private String peerId;
     private double speed;
 
-    public UserInfo(){
+    public UserInfo() { }
 
+    public UserInfo(String publicIP, int publicPort, String privateIP, int privatePort, Double latitude, Double longitude, String peerId, double speed) {
+        this.publicIP = publicIP;
+        this.publicPort = publicPort;
+        this.privateIP = privateIP;
+        this.privatePort = privatePort;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.peerId = peerId;
+        this.speed = speed;
     }
 
     public String getPublicIP() {
@@ -34,11 +43,11 @@ public class UserInfo {
         return privatePort;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -66,11 +75,11 @@ public class UserInfo {
         this.privatePort = privatePort;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -81,5 +90,6 @@ public class UserInfo {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
+
 }
 

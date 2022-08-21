@@ -1,8 +1,10 @@
-package signaling_server;
+package signaling_server.Controller;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import signaling_server.Model.UserInfo;
+import signaling_server.Model.UserSettings;
 
 import java.util.ArrayList;
 
@@ -60,6 +62,22 @@ public class ProcessJSONObject {
     }
 
     /**
+     * Mold and return user settings
+     *
+     * @return UserSettings of the sender
+     */
+    public UserSettings getUserSettings() {
+        UserSettings userSettings = new UserSettings();
+        try {
+            userSettings.setPeer_id(jsonObject.getString("peer_id"));
+            userSettings.setLi_enabled(jsonObject.getBoolean("li_enabled"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return userSettings;
+    }
+
+    /**
      * Get search range from json
      *
      * @return Cable range
@@ -112,10 +130,10 @@ public class ProcessJSONObject {
     }
 
     /**
-     * Make the sender's user information into a JSONObject
+     * Make the sender's user information into a JSONObject.
      *
-     * @param userInfo Source User Information
-     * @return userInfo as JSON
+     * @param userInfo Source User Information.
+     * @return userInfo as JSON.
      */
     public JSONObject getSrcUserInfo(UserInfo userInfo) {
         JSONObject jsonObject = new JSONObject();
@@ -131,7 +149,23 @@ public class ProcessJSONObject {
             //jsonObject.put("speed",userInfo.getSpeed());
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        return jsonObject;
+    }
 
+    /**
+     * Make the sender's user settings into a JSONObject.
+     * @param userSettings The settings obtained from the database of the user.
+     * @return userSettings as JSON.
+     */
+    public JSONObject getSrcUserSettings(UserSettings userSettings) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("processType", "getSrcUserSettings");
+            jsonObject.put("peer_id", userSettings.getPeer_id());
+            jsonObject.put("li_enabled", userSettings.isLi_enabled());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return jsonObject;
     }
